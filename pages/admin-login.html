@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal — Royal Pay</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+    :root {
+      --bg: #0a0a12;
+      --surface: #111120;
+      --surface-2: #1a1a2e;
+      --border: rgba(255,255,255,0.07);
+      --purple: #7c3aed;
+      --purple-glow: rgba(124,58,237,0.35);
+      --gold: #f59e0b;
+      --mint: #10b981;
+      --red: #ef4444;
+      --text: #f1f0f5;
+      --muted: rgba(241,240,245,0.48);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    /* Mesh gradient background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 0%, rgba(124,58,237,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(16,185,129,0.1) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Animated grid lines */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(420px, calc(100vw - 32px));
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 0 0 1px rgba(124,58,237,0.12), 0 32px 80px rgba(0,0,0,0.5);
+      animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 13px;
+      border-radius: 99px;
+      background: rgba(124,58,237,0.14);
+      border: 1px solid rgba(124,58,237,0.28);
+      color: #a78bfa;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .admin-badge i { font-size: 12px; }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #fff 40%, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .error-banner {
+      display: none;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.22);
+      color: #fca5a5;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .error-banner.show { display: block; }
+
+    .form { display: flex; flex-direction: column; gap: 14px; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      height: 46px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: rgba(124,58,237,0.6);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.14);
+    }
+
+    .pw-wrap { position: relative; }
+    .pw-wrap input { padding-right: 46px; }
+    .pw-toggle {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px;
+      transition: color 0.2s;
+    }
+    .pw-toggle:hover { color: var(--text); }
+
+    .submit-btn {
+      height: 48px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: white;
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 4px;
+      box-shadow: 0 8px 24px rgba(124,58,237,0.32);
+      transition: all 0.25s ease;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(124,58,237,0.42); }
+    .submit-btn:disabled { opacity: 0.6; cursor: progress; transform: none; }
+
+    .back-link {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .back-link a { color: #a78bfa; text-decoration: none; font-weight: 700; margin-left: 4px; }
+    .back-link a:hover { text-decoration: underline; }
+
+    .divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* Spinner */
+    .btn-spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    .submit-btn.loading .btn-spinner { display: block; }
+    .submit-btn.loading .btn-text { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="admin-badge">
+      <i class="bi bi-shield-lock-fill"></i>
+      Administrator Access
+    </div>
+    <h1>Royal Pay<br>Control Panel</h1>
+    <p class="subtitle">Restricted to authorized administrators only. All sessions are audited and logged.</p>
+
+    <div class="error-banner" id="errorBanner"></div>
+
+    <form class="form" id="adminLoginForm" novalidate>
+      <div>
+        <label for="adminEmail">Admin Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@royalpay.com" autocomplete="email" required>
+      </div>
+      <div>
+        <label for="adminPassword">Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="adminPassword" placeholder="Enter admin password" autocomplete="current-password" required>
+          <button type="button" class="pw-toggle" id="pwToggle" aria-label="Toggle password">
+            <i class="bi bi-eye" id="eyeIcon"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn" id="loginBtn">
+        <div class="btn-spinner"></div>
+        <span class="btn-text"><i class="bi bi-shield-check"></i>&nbsp; Access Admin Panel</span>
+      </button>
+    </form>
+
+    <div class="back-link">
+      Not an admin? <a href="./login.html">User Login</a>
+    </div>
+  </div>
+
+  <script type="module" src="../Js/admin-login.js"></script>
+</body>
+</html>

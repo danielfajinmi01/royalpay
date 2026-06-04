@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Css/login.css">
+  <link rel="stylesheet" href="../Css/dashboard.css">
+  <script src="../Js/theme.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <title>Dashboard - Royal Pay</title>
+</head>
+
+<body class="dashboard-page">
+
+  <!-- ── ambient background blobs ── -->
+  <div class="blob blob-one" aria-hidden="true"></div>
+  <div class="blob blob-two" aria-hidden="true"></div>
+
+  <!-- ── main wrapper ── -->
+  <div class="dashboard-wrapper">
+    
+    <!-- ── header ── -->
+    <header class="dash-header">
+      <div class="header-left">
+        <a class="brand" href="../index.html">
+          <img src="../Images/Logo/high-resolution-color-logo (1).png" alt="Royal Pay Logo" id="logoImg">
+        </a>
+      </div>
+      <div class="header-right">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme"></button>
+        <div class="user-menu-trigger" id="userMenuTrigger">
+          <img src="" alt="" id="userAvatar" class="avatar-img" style="display: none;">
+          <div class="avatar-placeholder" id="avatarPlaceholder">U</div>
+          <span class="user-name-label" id="userNameLabel">Loading...</span>
+          <i class="bi bi-chevron-down"></i>
+          
+          <!-- Dropdown menu -->
+          <div class="user-dropdown" id="userDropdown">
+            <button type="button" id="editProfileBtn"><i class="bi bi-person-fill"></i> Edit Profile</button>
+            <button type="button" id="logoutBtn" class="logout-action"><i class="bi bi-box-arrow-right"></i> Logout</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── dashboard body grid ── -->
+    <main class="dash-content">
+      
+      <!-- ── column left: balance card and quick actions ── -->
+      <section class="dash-main-card">
+        <div class="card-inner">
+          <div class="card-header-row">
+            <div>
+              <span class="card-eyebrow">Total Assets (USD Value)</span>
+              <h1 class="total-balance" id="totalBalanceUSD">$0.00</h1>
+            </div>
+            <div class="currency-switcher-wrap">
+              <label for="displayCurrency"><i class="bi bi-globe"></i> View in</label>
+              <select id="displayCurrency" class="currency-select">
+                <option value="USD">USD ($)</option>
+                <option value="NGN">NGN (₦)</option>
+                <option value="BTC">BTC (₿)</option>
+                <option value="ETH">ETH (Ξ)</option>
+                <option value="USDT">USDT (₮)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Wallets slider grid -->
+          <div class="wallets-grid">
+            <div class="wallet-tile usd">
+              <div class="tile-head">
+                <span>USD Wallet</span>
+                <i class="bi bi-cash-stack"></i>
+              </div>
+              <strong class="tile-val" id="usdWalletVal">$0.00</strong>
+            </div>
+            <div class="wallet-tile btc">
+              <div class="tile-head">
+                <span>Bitcoin</span>
+                <i class="bi bi-currency-bitcoin"></i>
+              </div>
+              <strong class="tile-val" id="btcWalletVal">0.0000 BTC</strong>
+            </div>
+            <div class="wallet-tile eth">
+              <div class="tile-head">
+                <span>Ethereum</span>
+                <i class="bi bi-coin"></i>
+              </div>
+              <strong class="tile-val" id="ethWalletVal">0.0000 ETH</strong>
+            </div>
+            <div class="wallet-tile usdt">
+              <div class="tile-head">
+                <span>Tether (USDT)</span>
+                <span class="t-badge">₮</span>
+              </div>
+              <strong class="tile-val" id="usdtWalletVal">$0.00</strong>
+            </div>
+          </div>
+
+          <!-- scrolling crypto rates ticker -->
+          <div class="ticker-container">
+            <div class="ticker-title">Live Rates:</div>
+            <div class="ticker-wrap">
+              <div class="ticker-content" id="cryptoTicker">
+                <span>BTC/USD: <span id="tickerBTC">Loading...</span></span>
+                <span>ETH/USD: <span id="tickerETH">Loading...</span></span>
+                <span>USDT/USD: <span id="tickerUSDT">Loading...</span></span>
+                <span>USD/NGN: ₦1,500.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- quick action buttons -->
+        <div class="quick-actions">
+          <button class="action-btn" type="button" id="openTransferModal">
+            <span class="icon-circle shadow-purple"><i class="bi bi-arrow-up-right"></i></span>
+            <span>Send Money</span>
+          </button>
+          <button class="action-btn" type="button" id="openDepositModal">
+            <span class="icon-circle shadow-mint"><i class="bi bi-wallet2"></i></span>
+            <span>Add Funds</span>
+          </button>
+          <button class="action-btn" type="button" id="openExchangeModal">
+            <span class="icon-circle shadow-gold"><i class="bi bi-arrow-left-right"></i></span>
+            <span>Convert Crypto</span>
+          </button>
+          <button class="action-btn" type="button" id="openGrantModal">
+            <span class="icon-circle shadow-orange"><i class="bi bi-award-fill"></i></span>
+            <span class="action-label-highlight">Grant Application</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── column right: account number & details card ── -->
+      <section class="dash-side-info">
+        <div class="info-card profile-card">
+          <span class="info-label">Account details</span>
+          <div class="account-number-block">
+            <p>Royal Pay Account Number</p>
+            <div class="acc-num-row">
+              <strong id="displayAccountNumber">Loading...</strong>
+              <button class="copy-acc-btn" id="copyAccBtn" title="Copy Account Number" aria-label="Copy Account Number">
+                <i class="bi bi-copy"></i>
+              </button>
+            </div>
+          </div>
+          <div class="user-meta-list">
+            <div class="meta-item">
+              <span class="lbl">Email Address</span>
+              <span class="val" id="metaEmail">Loading...</span>
+            </div>
+            <div class="meta-item">
+              <span class="lbl">Registered On</span>
+              <span class="val" id="metaJoined">Loading...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications Mini Widget -->
+        <div class="info-card notif-widget">
+          <div class="notif-header">
+            <span>Activity Log</span>
+            <i class="bi bi-bell-fill"></i>
+          </div>
+          <div class="notif-list" id="notifList">
+            <div class="notif-placeholder">No recent alerts.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── row bottom: transactions list ── -->
+      <section class="dash-transactions">
+        <div class="tx-card">
+          <div class="tx-card-header">
+            <div class="tx-header-left">
+              <h2>Transaction Ledger</h2>
+              <p>Realtime history of operations and transfers</p>
+            </div>
+            <div class="tx-header-right">
+              <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="txSearchInput" placeholder="Search references or accounts...">
+              </div>
+            </div>
+          </div>
+
+          <!-- filters -->
+          <div class="tx-filters">
+            <button class="filter-tab active" data-filter="all">All Transactions</button>
+            <button class="filter-tab" data-filter="transfer">Transfers</button>
+            <button class="filter-tab" data-filter="deposit">Deposits</button>
+            <button class="filter-tab" data-filter="grant">Grants</button>
+            <button class="filter-tab" data-filter="conversion">Conversions</button>
+          </div>
+
+          <!-- ledger table -->
+          <div class="table-scroll-container">

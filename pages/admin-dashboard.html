@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Control Panel — Royal Pay</title>
+  <link rel="stylesheet" href="../Css/admin.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="../Images/Logo/high-resolution-color-logo (1).png" alt="Royal Pay" class="logo-img">
+      <span class="admin-pill">ADMIN</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-link active" data-section="overview">
+        <i class="bi bi-grid-1x2-fill"></i><span>Overview</span>
+      </a>
+      <a href="#" class="nav-link" data-section="applications">
+        <i class="bi bi-award-fill"></i>
+        <span>Grant Applications</span>
+        <span class="badge" id="pendingBadge">0</span>
+      </a>
+      <a href="#" class="nav-link" data-section="users">
+        <i class="bi bi-people-fill"></i><span>User Directory</span>
+      </a>
+      <a href="#" class="nav-link" data-section="transactions">
+        <i class="bi bi-receipt"></i><span>Audit Ledger</span>
+      </a>
+    </nav>
+
+    <button class="sidebar-logout" id="adminLogoutBtn">
+      <i class="bi bi-box-arrow-left"></i> Logout
+    </button>
+  </aside>
+
+  <!-- ── MOBILE TOPBAR ── -->
+  <div class="mobile-topbar">
+    <button class="hamburger" id="hamburger"><i class="bi bi-list"></i></button>
+    <span class="mobile-title">Admin Panel</span>
+    <div class="topbar-right">
+      <div class="admin-avatar" id="adminAvatar">A</div>
+    </div>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="admin-main" id="adminMain">
+
+    <!-- ── HEADER ── -->
+    <header class="admin-header">
+      <div class="admin-header-left">
+        <h1 class="page-title" id="pageTitle">System Overview</h1>
+        <p class="page-sub" id="pageSub">Monitoring all Royal Pay platform activity</p>
+      </div>
+      <div class="admin-header-right">
+        <div class="admin-profile-chip">
+          <div class="chip-avatar" id="adminAvatarChip">A</div>
+          <div>
+            <p class="chip-name" id="adminName">Administrator</p>
+            <p class="chip-role">Super Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ SECTION: OVERVIEW ══════════════════════════════════════════════════ -->
+    <section class="admin-section active" id="section-overview">
+      <div class="stats-grid">
+        <div class="stat-card purple">
+          <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Total Users</span>
+            <strong class="stat-value" id="statTotalUsers">—</strong>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Pending Applications</span>
+            <strong class="stat-value" id="statPending">—</strong>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+        <div class="stat-card mint">
+          <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Total System Assets (USD)</span>
+            <strong class="stat-value" id="statAssets">—</strong>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon"><i class="bi bi-slash-circle-fill"></i></div>
+          <div class="stat-body">
+            <span class="stat-label">Banned Accounts</span>
+            <strong class="stat-value" id="statBanned">—</strong>
+          </div>
+          <div class="stat-glow"></div>
+        </div>
+      </div>
+
+      <!-- Recent applications preview -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2><i class="bi bi-clock-history"></i> Recent Pending Applications</h2>
+          <button class="view-all-btn" data-goto="applications">View All</button>
+        </div>
+        <div class="app-list-mini" id="overviewAppList">
+          <div class="empty-state"><i class="bi bi-inbox"></i><p>No pending applications</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION: APPLICATIONS ═══════════════════════════════════════════════ -->
+    <section class="admin-section" id="section-applications">
+      <div class="section-toolbar">
+        <div class="filter-tabs">
+          <button class="ftab active" data-appfilter="pending">Pending</button>
+          <button class="ftab" data-appfilter="approved">Approved</button>
+          <button class="ftab" data-appfilter="declined">Declined</button>
+          <button class="ftab" data-appfilter="all">All</button>
+        </div>
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" id="appSearchInput" placeholder="Search by name or account...">
+        </div>
+      </div>
+
+      <div class="panel-card no-pad">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Applicant</th>
+              <th>Account No.</th>
+              <th>Category</th>
+              <th>Amount Requested</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="appTableBody">
+            <tr><td colspan="7" class="table-loading"><div class="mini-spinner"></div> Loading applications...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION: USERS ════════════════════════════════════════════════════ -->
+    <section class="admin-section" id="section-users">
+      <div class="section-toolbar">
+        <div class="filter-tabs">
+          <button class="ftab active" data-userfilter="all">All Users</button>
+          <button class="ftab" data-userfilter="active">Active</button>
+          <button class="ftab" data-userfilter="banned">Banned</button>
+        </div>
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" id="userSearchInput" placeholder="Search by name, email, or account...">
+        </div>
+      </div>
+
+      <div class="panel-card no-pad">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Account No.</th>
+              <th>Email</th>
+              <th>USD Balance</th>
+              <th>Registered</th>
+              <th>Status</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr><td colspan="7" class="table-loading"><div class="mini-spinner"></div> Loading users...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION: TRANSACTIONS ════════════════════════════════════════════ -->
+    <section class="admin-section" id="section-transactions">
+      <div class="section-toolbar">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" id="txSearchInput" placeholder="Search references, accounts, descriptions...">
+        </div>
+      </div>
+
+      <div class="panel-card no-pad">
+        <table class="admin-table">
+          <thead>
