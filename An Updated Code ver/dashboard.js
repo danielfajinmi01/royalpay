@@ -346,12 +346,9 @@ document.querySelectorAll(".modal-overlay").forEach(overlay => {
 
 // ─── Open Modal Buttons ───────────────────────────────────────────────────────
 document.getElementById("openTransferModal").addEventListener("click", () => {
-  // Null-guard: these elements may not exist if HTML version is older
-  const nameEl = document.getElementById("transferReceiverName");
-  const btnEl  = document.getElementById("transferSubmitBtn");
-  if (nameEl) nameEl.textContent = "";
-  if (btnEl)  btnEl.disabled     = true;
-  openModal("transferModal"); // always called, regardless of above
+  document.getElementById("transferReceiverName").textContent = "";
+  document.getElementById("transferSubmitBtn").disabled = true;
+  openModal("transferModal");
 });
 
 document.getElementById("openDepositModal").addEventListener("click", () => {
@@ -364,15 +361,11 @@ document.getElementById("openExchangeModal").addEventListener("click", () => {
 });
 
 document.getElementById("openGrantModal").addEventListener("click", () => {
-  // Null-guard: reset grant sections safely
-  const formEl = document.getElementById("grantFormSection");
-  const procEl = document.getElementById("grantProcessingSection");
-  const succEl = document.getElementById("grantSuccessSection");
-  if (formEl) formEl.style.display = "block";
-  if (procEl) procEl.style.display = "none";
-  if (succEl) succEl.style.display = "none";
+  document.getElementById("grantFormSection").style.display     = "block";
+  document.getElementById("grantProcessingSection").style.display = "none";
+  document.getElementById("grantSuccessSection").style.display  = "none";
   if (currentUserDoc) autofillForms(currentUserDoc);
-  openModal("grantModal"); // always called, regardless of above
+  openModal("grantModal");
 });
 
 document.getElementById("editProfileBtn").addEventListener("click", () => {
@@ -436,73 +429,75 @@ document.querySelectorAll(".filter-tab").forEach(tab => {
 // ══════════════════════════════════════════════════════════════
 let lookupTimeout = null;
 
-const transferReceiverInput = document.getElementById("transferReceiver");
-if (transferReceiverInput) {
-  transferReceiverInput.addEventListener("input", e => {
-    const val       = e.target.value.trim();
-    const nameLabel = document.getElementById("transferReceiverName");
-    const submitBtn = document.getElementById("transferSubmitBtn");
-    const spinner   = document.getElementById("transferVerificationSpinner");
+document.getElementById("transferReceiver").addEventListener("input", e => {
+  const val       = e.target.value.trim();
+  const nameLabel = document.getElementById("transferReceiverName");
+  const submitBtn = document.getElementById("transferSubmitBtn");
+  const spinner   = document.getElementById("transferVerificationSpinner");
 
-    if (nameLabel) { nameLabel.textContent = ""; nameLabel.classList.remove("error"); }
-    if (submitBtn)   submitBtn.disabled = true;
+  nameLabel.textContent = "";
+  nameLabel.classList.remove("error");
+  submitBtn.disabled = true;
 
-    if (val.length < 10) return;
+  if (val.length < 10) return;
 
-    clearTimeout(lookupTimeout);
-    if (spinner) spinner.style.display = "block";
+  clearTimeout(lookupTimeout);
+  spinner.style.display = "block";
 
-    lookupTimeout = setTimeout(async () => {
-      try {
-        const q    = query(collection(db, "users"), where("accountNumber", "==", val));
-        const snap = await getDocs(q);
-        if (spinner) spinner.style.display = "none";
+  lookupTimeout = setTimeout(async () => {
+    try {
+      const q    = query(collection(db, "users"), where("accountNumber", "==", val));
+      const snap = await getDocs(q);
+      spinner.style.display = "none";
 
-        if (!snap.empty) {
-          const receiver = snap.docs[0].data();
-          if (receiver.uid === auth.currentUser.uid) {
-            if (nameLabel) { nameLabel.textContent = "✕ Cannot transfer to your own account."; nameLabel.classList.add("error"); }
-          } else {
-            if (nameLabel) {
-              nameLabel.textContent = `✓ Recipient: ${receiver.displayName || (receiver.firstName + " " + receiver.lastName).trim()}`;
-              nameLabel.classList.remove("error");
-            }
-            if (submitBtn) submitBtn.disabled = false;
-          }
+      if (!snap.empty) {
+        const receiver = snap.docs[0].data();
+        if (receiver.uid === auth.currentUser.uid) {
+          nameLabel.textContent = "✕ Cannot transfer to your own account.";
+          nameLabel.classList.add("error");
         } else {
-          if (nameLabel) { nameLabel.textContent = "✕ Account number not found."; nameLabel.classList.add("error"); }
+          nameLabel.textContent = `✓ Recipient: ${receiver.displayName || (receiver.firstName + " " + receiver.lastName).trim()}`;
+          nameLabel.classList.remove("error");
+          submitBtn.disabled = false;
         }
-      } catch (err) {
-        if (spinner) spinner.style.display = "none";
-        if (nameLabel) { nameLabel.textContent = "✕ Error verifying recipient."; nameLabel.classList.add("error"); }
+      } else {
+        nameLabel.textContent = "✕ Account number not found.";
+        nameLabel.classList.add("error");
       }
-    }, 500);
-  });
-}
+    } catch (err) {
+      spinner.style.display = "none";
+      nameLabel.textContent = "✕ Error verifying recipient.";
+      nameLabel.classList.add("error");
+    }
+  }, 500);
+});
 
-const transferFormEl = document.getElementById("transferForm");
-if (transferFormEl) transferFormEl.addEventListener("submit", async e => {
+document.getElementById("transferForm").addEventListener("submit", async e => {
   e.preventDefault();
   const errorEl   = document.getElementById("transferError");
   const submitBtn = document.getElementById("transferSubmitBtn");
-  if (errorEl) { errorEl.classList.remove("show"); errorEl.textContent = ""; }
+  errorEl.classList.remove("show");
+  errorEl.textContent = "";
 
-  const receiverAcc = document.getElementById("transferReceiver")?.value.trim() || "";
-  const amount      = parseFloat(document.getElementById("transferAmount")?.value || "0");
-  const note        = document.getElementById("transferNote")?.value.trim() || "";
+  const receiverAcc = document.getElementById("transferReceiver").value.trim();
+  const amount      = parseFloat(document.getElementById("transferAmount").value);
+  const note        = document.getElementById("transferNote").value.trim();
 
   if (!receiverAcc || isNaN(amount) || amount <= 0) {
-    if (errorEl) { errorEl.textContent = "Please enter a valid recipient and amount."; errorEl.classList.add("show"); }
+    errorEl.textContent = "Please enter a valid recipient and amount.";
+    errorEl.classList.add("show");
     return;
   }
 
   const senderBal = currentUserDoc?.walletBalance || 0;
   if (amount > senderBal) {
-    if (errorEl) { errorEl.textContent = `Insufficient USD wallet balance. Available: $${senderBal.toLocaleString(undefined,{minimumFractionDigits:2})}`; errorEl.classList.add("show"); }
+    errorEl.textContent = `Insufficient USD wallet balance. Available: $${senderBal.toLocaleString(undefined,{minimumFractionDigits:2})}`;
+    errorEl.classList.add("show");
     return;
   }
 
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Processing..."; }
+  submitBtn.disabled    = true;
+  submitBtn.textContent = "Processing...";
 
   try {
     const q    = query(collection(db, "users"), where("accountNumber", "==", receiverAcc));
@@ -541,8 +536,10 @@ if (transferFormEl) transferFormEl.addEventListener("submit", async e => {
 
     closeModal("transferModal");
   } catch (err) {
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Send Money"; }
-    if (errorEl)   { errorEl.textContent = err.message || "Transfer failed. Please try again."; errorEl.classList.add("show"); }
+    submitBtn.disabled    = false;
+    submitBtn.textContent = "Send Money";
+    errorEl.textContent   = err.message || "Transfer failed. Please try again.";
+    errorEl.classList.add("show");
   }
 });
 
@@ -725,8 +722,7 @@ document.getElementById("exchangeForm").addEventListener("submit", async e => {
 // ══════════════════════════════════════════════════════════════
 // GRANT APPLICATION
 // ══════════════════════════════════════════════════════════════
-const grantFormEl = document.getElementById("grantForm");
-if (grantFormEl) grantFormEl.addEventListener("submit", e => {
+document.getElementById("grantForm").addEventListener("submit", e => {
   e.preventDefault();
   const errorEl    = document.getElementById("grantError");
   const category   = document.getElementById("grantCategory").value;
@@ -805,13 +801,10 @@ async function submitGrantApplication(amount, purpose, category, employment, inc
       createdAt:      serverTimestamp()
     });
 
-    const procSecEl = document.getElementById("grantProcessingSection");
-    if (procSecEl) procSecEl.style.display = "none";
-    const approvedAmtEl = document.getElementById("grantApprovedAmount");
-    if (approvedAmtEl) approvedAmtEl.textContent =
+    document.getElementById("grantProcessingSection").style.display = "none";
+    document.getElementById("grantApprovedAmount").textContent =
       `$${amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
-    const succSecEl = document.getElementById("grantSuccessSection");
-    if (succSecEl) succSecEl.style.display = "flex";
+    document.getElementById("grantSuccessSection").style.display = "flex";
   } catch (err) {
     console.error("Grant submission error:", err);
     closeModal("grantModal");
@@ -819,7 +812,7 @@ async function submitGrantApplication(amount, purpose, category, employment, inc
   }
 }
 
-document.getElementById("closeGrantSuccessBtn")?.addEventListener("click", () => {
+document.getElementById("closeGrantSuccessBtn").addEventListener("click", () => {
   closeModal("grantModal");
 });
 

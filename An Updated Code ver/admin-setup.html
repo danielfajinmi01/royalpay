@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Setup — Royal Pay</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --bg: #0a0a12; --surface: #111120; --border: rgba(255,255,255,0.07);
+      --purple: #7c3aed; --mint: #10b981; --red: #ef4444;
+      --text: #f1f0f5; --muted: rgba(241,240,245,0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; display: grid; place-items: center;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 60% at 20% 0%, rgba(124,58,237,0.18), transparent 60%),
+                  radial-gradient(ellipse 60% 50% at 80% 100%, rgba(16,185,129,0.1), transparent 55%);
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .card {
+      position: relative; z-index: 1;
+      width: min(440px, calc(100vw - 32px));
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px 36px;
+      box-shadow: 0 0 0 1px rgba(124,58,237,0.12), 0 32px 80px rgba(0,0,0,0.5);
+      text-align: center;
+      animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .icon-wrap {
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
+      display: grid; place-items: center; font-size: 26px;
+      background: rgba(124,58,237,0.14); border: 1px solid rgba(124,58,237,0.28);
+      color: #a78bfa;
+    }
+    .icon-wrap.success { background: rgba(16,185,129,0.14); border-color: rgba(16,185,129,0.28); color: var(--mint); }
+    .icon-wrap.error   { background: rgba(239,68,68,0.14);  border-color: rgba(239,68,68,0.28);  color: var(--red); }
+    h1 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin-bottom: 28px; }
+    .status-box {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px; text-align: left;
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
+    }
+    .step {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13.5px; font-weight: 600; color: var(--muted);
+      transition: color 0.3s ease;
+    }
+    .step i { font-size: 15px; width: 18px; text-align: center; }
+    .step.active { color: #a78bfa; }
+    .step.done   { color: var(--mint); }
+    .step.failed { color: var(--red); }
+    .step.active i { display: inline-block; animation: spin 0.8s linear infinite; border: 2px solid transparent; border-top-color: #a78bfa; border-radius: 50%; width: 14px; height: 14px; }
+    .step.active i::before { content: "" !important; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .result-msg {
+      font-size: 14px; font-weight: 700; padding: 12px 16px;
+      border-radius: 10px; display: none; margin-bottom: 20px;
+    }
+    .result-msg.success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.22); color: var(--mint); display: block; }
+    .result-msg.error   { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.22);  color: var(--red);  display: block; }
+    .goto-btn {
+      display: none; width: 100%; height: 48px; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: white; font-size: 14.5px; font-weight: 800; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(124,58,237,0.32);
+      transition: all 0.25s ease;
+    }
+    .goto-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(124,58,237,0.42); }
+    .goto-btn.show { display: block; }
+    .warning-note {
+      margin-top: 16px; font-size: 12px; color: var(--muted); line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-wrap" id="iconWrap">
+      <i class="bi bi-shield-lock-fill"></i>
+    </div>
+    <h1>Admin Account Setup</h1>
+    <p class="subtitle">One-time setup for the Royal Pay administrator account. This page will auto-run and redirect you when complete.</p>
+
+    <div class="status-box">
+      <div class="step" id="step1"><i class="bi bi-circle"></i> Connecting to Firebase</div>
+      <div class="step" id="step2"><i class="bi bi-circle"></i> Creating / verifying admin account</div>
+      <div class="step" id="step3"><i class="bi bi-circle"></i> Writing admin profile to database</div>
+      <div class="step" id="step4"><i class="bi bi-circle"></i> Finalizing setup</div>
+    </div>
+
+    <div class="result-msg" id="resultMsg"></div>
+    <button class="goto-btn" id="gotoBtn" onclick="window.location.href='./admin-login.html'">
+      <i class="bi bi-shield-check"></i>&nbsp; Go to Admin Login
+    </button>
+    <p class="warning-note" id="warningNote">⚠ Delete or restrict access to this page after setup is complete.</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp }              from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut }
+                                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp }
+                                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyBt_MIilpDsOjRWjhP2HB-gAAg7Ikoa42E",
+      authDomain:        "royal-pay-c0609.firebaseapp.com",
+      projectId:         "royal-pay-c0609",
+      storageBucket:     "royal-pay-c0609.firebasestorage.app",
+      messagingSenderId: "779187567401",
+      appId:             "1:779187567401:web:804afc6dd2bc8464d0d538"
+    };
+
+    const ADMIN_EMAIL    = "danielfajinmi19@gmail.com";
+    const ADMIN_PASSWORD = "Iamthatiam";
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    function setStep(id, state) {
+      const el = document.getElementById(id);
+      el.className = `step ${state}`;
+      const icons = { active: "", done: "bi bi-check-circle-fill", failed: "bi bi-x-circle-fill" };
+      if (state !== "active") el.querySelector("i").className = icons[state];
+    }
+
+    function showResult(type, msg) {
+      const el = document.getElementById("resultMsg");
+      el.className = `result-msg ${type}`;
+      el.textContent = msg;
+      const icon = document.getElementById("iconWrap");
+      icon.className = `icon-wrap ${type}`;
+      icon.innerHTML = type === "success"
+        ? '<i class="bi bi-check-circle-fill"></i>'
+        : '<i class="bi bi-x-circle-fill"></i>';
+      if (type === "success") {
+        document.getElementById("gotoBtn").classList.add("show");
+        setTimeout(() => window.location.href = "./admin-login.html", 3000);
+      }
+    }
+
+    async function run() {
+      await new Promise(r => setTimeout(r, 500));
+
+      // Step 1 — Firebase connection
+      setStep("step1", "active");
+      await new Promise(r => setTimeout(r, 700));
+      setStep("step1", "done");
+
+      // Step 2 — Auth account
+      setStep("step2", "active");
+      let user;
+      try {
+        const result = await createUserWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD);
+        user = result.user;
+      } catch (err) {
+        if (err.code === "auth/email-already-in-use") {
+          try {
+            const result = await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD);
+            user = result.user;
+          } catch (signInErr) {
+            setStep("step2", "failed");
+            setStep("step3", "failed");
+            setStep("step4", "failed");
+            showResult("error", `Sign-in failed: ${signInErr.message}`);
+            return;
+          }
+        } else {
+          setStep("step2", "failed");
+          setStep("step3", "failed");
+          setStep("step4", "failed");
+          showResult("error", `Auth error: ${err.message}`);
+          return;
+        }
+      }
+      setStep("step2", "done");
+
+      // Step 3 — Write Firestore admin doc
+      setStep("step3", "active");
+      try {
+        await setDoc(doc(db, "users", user.uid), {
+          uid:           user.uid,
+          email:         ADMIN_EMAIL,
+          displayName:   "Daniel Fajinmi",
+          firstName:     "Daniel",
+          lastName:      "Fajinmi",
+          role:          "admin",
+          status:        "active",
+          accountNumber: "0000000000",
+          walletBalance: 0,
+          usdBalance:    0,
+          btcBalance:    0,
+          ethBalance:    0,
+          usdtBalance:   0,
+          createdAt:     serverTimestamp(),
+          lastLogin:     serverTimestamp()
+        });
+      } catch (err) {
+        setStep("step3", "failed");
+        setStep("step4", "failed");
+        showResult("error", `Database error: ${err.message}`);
+        return;
+      }
+      setStep("step3", "done");
+
+      // Step 4 — Finalize
+      setStep("step4", "active");
+      await signOut(auth);
+      await new Promise(r => setTimeout(r, 600));
+      setStep("step4", "done");
+
+      showResult("success", "✓ Admin account ready! Redirecting to login in 3 seconds...");
+    }
+
+    run();
+  </script>
+</body>
+</html>
