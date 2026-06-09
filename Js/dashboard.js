@@ -487,9 +487,9 @@ if (transferFormEl) transferFormEl.addEventListener("submit", async e => {
   const submitBtn = document.getElementById("transferSubmitBtn");
   if (errorEl) { errorEl.classList.remove("show"); errorEl.textContent = ""; }
 
-  const receiverAcc = document.getElementById("transferReceiver")?.value.trim() || "";
+  const receiverAcc = document.getElementById("transferRecipient")?.value.trim() || "";
   const amount      = parseFloat(document.getElementById("transferAmount")?.value || "0");
-  const note        = document.getElementById("transferNote")?.value.trim() || "";
+  const note        = document.getElementById("transferDescription")?.value.trim() || "";
 
   if (!receiverAcc || isNaN(amount) || amount <= 0) {
     if (errorEl) { errorEl.textContent = "Please enter a valid recipient and amount."; errorEl.classList.add("show"); }
