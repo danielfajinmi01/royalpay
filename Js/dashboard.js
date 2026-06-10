@@ -53,7 +53,7 @@ onAuthStateChanged(auth, async (user) => {
     window.location.href = "./login.html";
     return;
   }
-  // Check banned status
+  // Check banned statusda
   try {
     const snap = await getDoc(doc(db, "users", user.uid));
     if (snap.exists() && snap.data().status === "banned") {
