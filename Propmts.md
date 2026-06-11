@@ -1,0 +1,2 @@
+You are a senior Front-end Engineer, from the figma designs provided for a multi step form.
+Firstly I want you to create files for each steps, it seems there are four steps so each steps takes a file and let us then use a page.tsx as our main file
