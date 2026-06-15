@@ -103,6 +103,18 @@ function initializeDashboard(user) {
 
 // ─── Fetch Live Crypto Rates ───────────────────────────────────────────────────
 async function fetchRates() {
+  const triggerPulse = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const pill = el.closest(".ticker-pill");
+      if (pill) {
+        pill.classList.remove("pulse-update");
+        void pill.offsetWidth; // force reflow
+        pill.classList.add("pulse-update");
+      }
+    }
+  };
+
   try {
     const res = await fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=usd,ngn"
@@ -121,14 +133,20 @@ async function fetchRates() {
     exchangeRates.NGN  = ngnRate || 1500;
 
     document.getElementById("tickerBTC").textContent  = `$${btcUSD.toLocaleString()}`;
+    triggerPulse("tickerBTC");
     document.getElementById("tickerETH").textContent  = `$${ethUSD.toLocaleString()}`;
+    triggerPulse("tickerETH");
     document.getElementById("tickerUSDT").textContent = `$${usdtUSD.toFixed(4)}`;
+    triggerPulse("tickerUSDT");
 
     if (currentUserDoc) updateUserUI(currentUserDoc);
   } catch (_) {
     document.getElementById("tickerBTC").textContent  = "$68,500 (est.)";
+    triggerPulse("tickerBTC");
     document.getElementById("tickerETH").textContent  = "$3,750 (est.)";
+    triggerPulse("tickerETH");
     document.getElementById("tickerUSDT").textContent = "$1.00";
+    triggerPulse("tickerUSDT");
   }
 }
 
@@ -283,7 +301,7 @@ function renderTransactions(txs) {
   });
 
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="table-empty">No transactions match the current filter.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" class="table-empty">No transactions match the current filter.</td></tr>`;
     return;
   }
 
@@ -305,16 +323,21 @@ function renderTransactions(txs) {
       <td>
         <div class="tx-type-cell">
           <span class="tx-icon-ind ${dir.statusClass}"><i class="bi ${dir.iconClass}"></i></span>
-          <div class="tx-type-meta">
-            <span class="tx-cat-label">${(tx.type || "TX").toUpperCase()}</span>
-            <span class="tx-dir-badge ${dir.badgeClass}">${dir.badgeLabel}</span>
-          </div>
         </div>
       </td>
-      <td><span class="tx-ref-cell">${tx.reference || "N/A"}</span></td>
-      <td><span class="tx-desc-cell">${tx.description || "—"}</span></td>
+      <td>
+        <div class="tx-details-cell">
+          <span class="tx-desc-cell">${tx.description || "—"}</span>
+          <span class="tx-ref-cell">${tx.reference || "N/A"}</span>
+        </div>
+      </td>
       <td><span class="tx-date-cell">${shortDate}</span></td>
-      <td class="text-right"><span class="tx-amt-cell ${dir.amtClass}">${amtFormatted}</span></td>
+      <td class="text-right">
+        <div class="tx-amt-badge-wrap">
+          <span class="tx-amt-cell ${dir.amtClass}">${amtFormatted}</span>
+          <span class="tx-dir-badge ${dir.badgeClass}">${dir.badgeLabel}</span>
+        </div>
+      </td>
     </tr>`;
   }).join("");
 }

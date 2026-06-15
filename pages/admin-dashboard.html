@@ -198,3 +198,47 @@
       <div class="panel-card no-pad">
         <table class="admin-table">
           <thead>
+            <tr>
+              <th>Type</th>
+              <th>Reference</th>
+              <th>From Account</th>
+              <th>To Account</th>
+              <th>Date</th>
+              <th class="text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="txTableBody">
+            <tr><td colspan="6" class="table-loading"><div class="mini-spinner"></div> Loading transactions...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       CONFIRM MODAL
+  ══════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="confirm-modal">
+      <div class="confirm-icon" id="confirmIcon">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      </div>
+      <h3 id="confirmTitle">Are you sure?</h3>
+      <p id="confirmMessage">This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn-cancel-modal" id="confirmCancel">Cancel</button>
+        <button class="btn-confirm-action" id="confirmOk">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TOAST NOTIFICATIONS
+  ══════════════════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Script must be type="module" and placed at end of body -->
+  <script type="module" src="../Js/admin-dashboard.js"></script>
+</body>
+</html>

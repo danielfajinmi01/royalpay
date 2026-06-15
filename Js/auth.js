@@ -32,8 +32,13 @@ const googleProvider = new GoogleAuthProvider();
 /**
  * Redirect to loader then dashboard after a short branded delay.
  */
-function redirectToDashboard() {
-  window.location.href = "./loader.html";
+async function redirectToDashboard(user) {
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (snap.exists() && snap.data().role === "admin") {
+    window.location.href = "./admin-dashboard.html";
+  } else {
+    window.location.href = "./loader.html";
+  }
 }
 
 /**
@@ -146,20 +151,20 @@ async function ensureUserDoc(user) {
 // If user is already logged in when they hit the login page, send them to the dashboard.
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    redirectToDashboard();
+    redirectToDashboard(user);
   }
 });
 
 // ─── DOM Ready ─────────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  const form           = document.querySelector(".login-form");
-  const loginBtn       = document.querySelector(".login-btn");
-  const emailInput     = document.querySelector("#email");
-  const passwordInput  = document.querySelector("#password");
-  const rememberCheck  = document.querySelector(".remember input[type='checkbox']");
+  const form = document.querySelector(".login-form");
+  const loginBtn = document.querySelector(".login-btn");
+  const emailInput = document.querySelector("#email");
+  const passwordInput = document.querySelector("#password");
+  const rememberCheck = document.querySelector(".remember input[type='checkbox']");
   const passwordToggle = document.querySelector("[data-password-toggle]");
-  const googleBtn      = document.querySelector(".google-btn");
-  const forgotLink     = document.querySelector(".forgot-link");
+  const googleBtn = document.querySelector(".google-btn");
+  const forgotLink = document.querySelector(".forgot-link");
 
   // ── Check if redirected due to suspension ───────────────────────────────────
   const urlParams = new URLSearchParams(window.location.search);
@@ -185,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     clearError();
 
-    const email    = emailInput.value.trim();
+    const email = emailInput.value.trim();
     const password = passwordInput.value;
 
     if (!email || !password) {
@@ -203,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await setPersistence(auth, persistence);
 
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      
+
       // Check if user is banned
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
@@ -215,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       await ensureUserDoc(user);
-      redirectToDashboard();
+      redirectToDashboard(user);
     } catch (err) {
       clearLoading(loginBtn);
       showError(friendlyError(err.code));
@@ -230,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       googleProvider.setCustomParameters({ prompt: "select_account" });
       const { user } = await signInWithPopup(auth, googleProvider);
-      
+
       // Check if user is banned
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
@@ -242,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       await ensureUserDoc(user);
-      redirectToDashboard();
+      redirectToDashboard(user);
     } catch (err) {
       clearLoading(googleBtn);
       if (err.code !== "auth/popup-closed-by-user") {

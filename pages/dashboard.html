@@ -81,13 +81,42 @@
           </div>
 
           <div class="ticker-container">
-            <div class="ticker-title">Live Rates:</div>
-            <div class="ticker-wrap">
-              <div class="ticker-content" id="cryptoTicker">
-                <span>BTC/USD: <span id="tickerBTC">Loading...</span></span>
-                <span>ETH/USD: <span id="tickerETH">Loading...</span></span>
-                <span>USDT/USD: <span id="tickerUSDT">Loading...</span></span>
-                <span>USD/NGN: ₦1,500.00</span>
+            <div class="ticker-content" id="cryptoTicker">
+              <!-- BTC Pill Card -->
+              <div class="ticker-pill btc-pill">
+                <div class="coin-icon-bg"><i class="bi bi-currency-bitcoin"></i></div>
+                <div class="coin-info-wrap">
+                  <span class="coin-symbol">BTC</span>
+                  <span class="coin-price" id="tickerBTC">Loading...</span>
+                </div>
+                <span class="percentage-badge positive">+1.84%</span>
+              </div>
+              <!-- ETH Pill Card -->
+              <div class="ticker-pill eth-pill">
+                <div class="coin-icon-bg"><i class="bi bi-coin"></i></div>
+                <div class="coin-info-wrap">
+                  <span class="coin-symbol">ETH</span>
+                  <span class="coin-price" id="tickerETH">Loading...</span>
+                </div>
+                <span class="percentage-badge positive">+2.45%</span>
+              </div>
+              <!-- USDT Pill Card -->
+              <div class="ticker-pill usdt-pill">
+                <div class="coin-icon-bg"><span class="t-badge">₮</span></div>
+                <div class="coin-info-wrap">
+                  <span class="coin-symbol">USDT</span>
+                  <span class="coin-price" id="tickerUSDT">Loading...</span>
+                </div>
+                <span class="percentage-badge neutral">+0.01%</span>
+              </div>
+              <!-- NGN Pill Card -->
+              <div class="ticker-pill ngn-pill">
+                <div class="coin-icon-bg"><i class="bi bi-bank"></i></div>
+                <div class="coin-info-wrap">
+                  <span class="coin-symbol">NGN</span>
+                  <span class="coin-price">₦1,500.00</span>
+                </div>
+                <span class="percentage-badge negative">-0.12%</span>
               </div>
             </div>
           </div>
@@ -175,15 +204,14 @@
             <table class="tx-table">
               <thead>
                 <tr>
-                  <th>Type</th>
-                  <th>Reference</th>
-                  <th>Description</th>
+                  <th style="width: 50px;"></th>
+                  <th>Transaction Details</th>
                   <th>Date</th>
                   <th class="text-right">Amount</th>
                 </tr>
               </thead>
               <tbody id="txTableBody">
-                <tr><td colspan="5" class="table-empty">No transactions yet.</td></tr>
+                <tr><td colspan="4" class="table-empty">No transactions yet.</td></tr>
               </tbody>
             </table>
           </div>
