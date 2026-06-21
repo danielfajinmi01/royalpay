@@ -39,6 +39,7 @@ let activeFilter     = "all";
 let rawTransactions  = [];
 let selectedCurrency = "USD";
 let txMap            = {};   // keyed by transaction ID for quick detail lookup
+let isBalanceVisible = true;
 
 const exchangeRates = {
   USD:  1,
@@ -169,6 +170,20 @@ function updateUserUI(data) {
 
   document.getElementById("userNameLabel").textContent = fullName;
 
+  // ── Calculate dynamic greeting based on hour ──
+  const hour = new Date().getHours();
+  let greeting = "Welcome back";
+  if (hour >= 5 && hour < 12) greeting = "Good morning";
+  else if (hour >= 12 && hour < 18) greeting = "Good afternoon";
+  else greeting = "Good evening";
+
+  const firstName = data.firstName || data.displayName?.split(" ")[0] || "User";
+
+  const dashboardGreeting = document.getElementById("dashboardGreeting");
+  const dashboardUserName = document.getElementById("dashboardUserName");
+  if (dashboardGreeting) dashboardGreeting.textContent = `${greeting},`;
+  if (dashboardUserName) dashboardUserName.textContent = firstName;
+
   const avatarPlaceholder = document.getElementById("avatarPlaceholder");
   const userAvatar        = document.getElementById("userAvatar");
   if (data.photoURL) {
@@ -196,12 +211,16 @@ function updateUserUI(data) {
   const ethBal  = data.ethBalance    || 0;
   const usdtBal = data.usdtBalance   || 0;
 
-  document.getElementById("usdWalletVal").textContent  =
-    `$${usdBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  document.getElementById("btcWalletVal").textContent  = `${btcBal.toFixed(5)} BTC`;
-  document.getElementById("ethWalletVal").textContent  = `${ethBal.toFixed(4)} ETH`;
-  document.getElementById("usdtWalletVal").textContent =
-    `$${usdtBal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`;
+  const maskValue = (val, formatter) => {
+    return isBalanceVisible ? formatter(val) : "••••••";
+  };
+
+  document.getElementById("usdWalletVal").textContent = maskValue(usdBal, v =>
+    `$${v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+  document.getElementById("btcWalletVal").textContent = maskValue(btcBal, v => `${v.toFixed(5)} BTC`);
+  document.getElementById("ethWalletVal").textContent = maskValue(ethBal, v => `${v.toFixed(4)} ETH`);
+  document.getElementById("usdtWalletVal").textContent = maskValue(usdtBal, v =>
+    `$${v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDT`);
 
   const totalUSD =
     usdBal +
@@ -209,7 +228,16 @@ function updateUserUI(data) {
     (ethBal  / exchangeRates.ETH) +
     (usdtBal / exchangeRates.USDT);
 
-  document.getElementById("totalBalanceUSD").textContent = formatValue(totalUSD, selectedCurrency);
+  const formattedTotal = formatValue(totalUSD, selectedCurrency);
+  document.getElementById("totalBalanceUSD").textContent = isBalanceVisible ? formattedTotal : "••••••";
+
+  // ── Fade out injected loader overlay ──
+  const loader = document.getElementById("dashboardLoader");
+  if (loader && !loader.classList.contains("fade-out")) {
+    setTimeout(() => {
+      loader.classList.add("fade-out");
+    }, 600);
+  }
 }
 
 // ─── Autofill Grant & Profile Forms ───────────────────────────────────────────
@@ -532,6 +560,16 @@ document.getElementById("displayCurrency").addEventListener("change", e => {
   if (currentUserDoc) updateUserUI(currentUserDoc);
 });
 
+// ─── Balance Visibility Toggle ────────────────────────────────────────────────
+const toggleBalBtn = document.getElementById("toggleBalanceVisibility");
+if (toggleBalBtn) {
+  toggleBalBtn.addEventListener("click", () => {
+    isBalanceVisible = !isBalanceVisible;
+    toggleBalBtn.innerHTML = isBalanceVisible ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+    if (currentUserDoc) updateUserUI(currentUserDoc);
+  });
+}
+
 // ─── Dropdown Toggle ──────────────────────────────────────────────────────────
 const dropdown = document.getElementById("userDropdown");
 document.getElementById("userMenuTrigger").addEventListener("click", e => {
@@ -695,7 +733,21 @@ if (transferFormEl) transferFormEl.addEventListener("submit", async e => {
       timestamp:       serverTimestamp()
     });
 
-    closeModal("transferModal");
+    if (submitBtn) {
+      submitBtn.textContent = "✔ Successful";
+      submitBtn.style.backgroundColor = "#10b981"; // Mint green
+      submitBtn.style.color = "white";
+    }
+
+    setTimeout(() => {
+      closeModal("transferModal");
+      if (submitBtn) {
+        submitBtn.textContent = "Send Money";
+        submitBtn.style.backgroundColor = "";
+        submitBtn.style.color = "";
+      }
+    }, 1500);
+
   } catch (err) {
     if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Send Money"; }
     if (errorEl)   { errorEl.textContent = err.message || "Transfer failed. Please try again."; errorEl.classList.add("show"); }

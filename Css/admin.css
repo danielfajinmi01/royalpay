@@ -24,7 +24,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -228,16 +228,20 @@ body {
   position: relative;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 24px 20px;
   overflow: hidden;
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: border-color 0.25s, transform 0.25s;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
-.stat-card:hover { transform: translateY(-3px); }
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
 
 .stat-card.purple  { border-color: rgba(124,58,237,0.2); }
 .stat-card.purple:hover { border-color: rgba(124,58,237,0.4); }
@@ -276,10 +280,11 @@ body {
 .panel-card {
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px 22px;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
-.panel-card.no-pad { padding: 0; overflow: hidden; }
+.panel-card.no-pad { padding: 0; overflow: hidden; border-radius: 20px; }
 
 .panel-header {
   display: flex; justify-content: space-between; align-items: center;
@@ -585,3 +590,33 @@ body {
   /* Table horizontal scroll */
   .admin-table th, .admin-table td { padding: 10px 10px; font-size: 12px; }
 }
+
+/* ── UI Design Overrides (Remove Glassmorphism) ── */
+.admin-header {
+  background: var(--surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+:root[data-theme="dark"] .admin-header {
+  background: var(--panel) !important;
+}
+.stat-card {
+  background: var(--surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+:root[data-theme="dark"] .stat-card {
+  background: var(--panel) !important;
+}
+.panel-card {
+  background: var(--surface) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
+}
+:root[data-theme="dark"] .panel-card {
+  background: var(--panel) !important;
+}
+

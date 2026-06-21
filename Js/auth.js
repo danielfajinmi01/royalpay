@@ -37,7 +37,7 @@ async function redirectToDashboard(user) {
   if (snap.exists() && snap.data().role === "admin") {
     window.location.href = "./admin-dashboard.html";
   } else {
-    window.location.href = "./loader.html";
+    window.location.href = "./dashboard.html";
   }
 }
 
