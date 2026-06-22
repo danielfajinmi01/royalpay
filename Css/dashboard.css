@@ -2502,34 +2502,226 @@ body.dashboard-page *,
 /* ── Mobile Responsiveness for Dashboard ── */
 @media (max-width: 900px) {
   .dash-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
   .welcome-banner,
   .dash-transactions {
-    grid-column: span 1;
-  }
-  .wallets-grid {
-    grid-template-columns: 1fr;
+    grid-column: span 1 !important;
   }
 }
+
 @media (max-width: 600px) {
+  .dashboard-wrapper {
+    padding: 16px 12px !important;
+    gap: 20px !important;
+  }
+  
+  /* Chunky Header - Full Width */
   .dash-header {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
+    flex-direction: column !important;
+    gap: 20px !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+  .header-left {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
   }
   .header-right {
-    width: 100%;
-    justify-content: space-between;
+    width: 100% !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 16px !important;
   }
-  .ticker-pill {
-    min-width: auto;
-    width: 100%;
+  .theme-toggle {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+  }
+  
+  /* Avatar & Name Styling */
+  .user-menu-trigger {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .user-name-label {
+    display: block !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    margin-bottom: 8px !important;
+  }
+  .user-menu-trigger > .bi-chevron-down {
+    display: none !important; /* Hide the dropdown arrow */
+  }
+
+  /* Permanently visible chunk buttons for Edit Profile / Logout */
+  .user-dropdown {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    background: transparent !important;
+  }
+  .user-dropdown button {
+    padding: 16px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: 14px !important;
+    background: var(--soft) !important;
+    justify-content: center !important;
+  }
+  .user-dropdown button.logout-action {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #ef4444 !important;
+  }
+
+  /* Main Balance takes full space */
+  .dash-main-card .card-inner {
+    padding: 24px 20px !important;
+    text-align: center !important;
+    border-radius: 20px !important;
+  }
+  .card-header-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+  .card-eyebrow {
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+  .total-balance {
+    font-size: 46px !important; /* Huge bold balance */
+    width: 100% !important;
+    margin-top: 8px !important;
+  }
+  .currency-switcher-wrap {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .currency-select {
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+  }
+
+  /* Wallets: Two-Two Grid, Big Text */
+  .wallets-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    margin-top: 12px !important;
+  }
+  .wallet-tile {
+    padding: 18px 14px !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .wallet-tile .tile-head {
+    font-size: 13px !important;
+    margin-bottom: 10px !important;
+    justify-content: center !important;
+  }
+  .wallet-tile .tile-val {
+    font-size: 17px !important;
+    font-weight: 800 !important;
+  }
+
+  /* Live Rates: Block them Two Two */
+  .ticker-container {
+    overflow: visible !important;
+    padding-top: 24px !important;
+    display: block !important;
   }
   .ticker-content {
-    flex-wrap: wrap;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    width: 100% !important;
   }
+  .ticker-pill {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 16px 12px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    border-radius: 16px !important;
+  }
+  .coin-info-wrap {
+    align-items: center !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+  .coin-symbol {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+  }
+  .coin-price {
+    font-size: 15px !important;
+  }
+  .percentage-badge {
+    position: static !important;
+    display: inline-block !important;
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+  }
+
+  /* Quick Actions: Chunky and Bold */
   .quick-actions {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+    margin-top: 20px !important;
+  }
+  .action-btn {
+    width: 100% !important;
+    padding: 20px 12px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    border-radius: 18px !important;
+  }
+  .icon-circle {
+    width: 52px !important;
+    height: 52px !important;
+    font-size: 22px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Transactions & Info: High Legibility */
+  .info-card, .tx-card {
+    padding: 24px 16px !important;
+    border-radius: 20px !important;
+  }
+  .tx-filters {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .filter-tab {
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+    flex: 1 1 calc(50% - 10px) !important;
+    text-align: center !important;
+  }
+  .tx-table th, .tx-table td {
+    padding: 14px 10px !important;
+    font-size: 14px !important;
   }
 }
