@@ -1,250 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Css/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <script src="./Js/theme.js" defer></script>
-
-    <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2026/06/16/10/20260616102342-PFI6N779.js" defer></script>
-
-    <link rel="shortcut icon" href="/Images/Logo/royal-pay-white.png" type="image/x-icon">
-    <title>Royal Pay - Digital Banking Web App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Pay - The Future of Fluid Finance</title>
+  
+  <link rel="stylesheet" href="./Css/global.css">
+  <link rel="stylesheet" href="./Css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-
 <body>
 
-    <header>
-        <nav>
-            <div class="logo"><img src="./Images/Logo/high-resolution-logo-grayscale (1).png" alt="RoyaL Pay Logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
+  <!-- Global Navbar -->
+  <nav class="navbar">
+    <div class="nav-brand">Royal Pay</div>
+    <ul class="nav-links">
+      <li><a href="#">Personal</a></li>
+      <li><a href="#">Business</a></li>
+      <li><a href="#">Solutions</a></li>
+      <li><a href="#">Pricing</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="./pages/login.html" class="nav-login">Login</a>
+      <a href="./pages/signup.html" class="nav-cta">Get Started</a>
+    </div>
+  </nav>
 
-            <div class="right">
-                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme"></button>
-                <a class="log-in-btn" href="./pages/login.html">Log in</a>
-                <a class="sign-in-btn" href="./pages/signup.html">Sign Up</a>
-            </div>
-        </nav>
-    </header>
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-pill">
+        <i class="bi bi-stars"></i> The Future of Fluid Finance
+      </div>
+      <h1>Banking that moves at the <span class="text-gradient">speed of light</span></h1>
+      <p>Experience a seamless fusion of high-end stability and cutting-edge digital dynamism. Manage, save, and grow your wealth with Royal Pay.</p>
+      
+      <div class="hero-actions">
+        <a href="./pages/signup.html" class="btn-primary">Open Free Account <i class="bi bi-arrow-right" style="margin-left: 8px;"></i></a>
+        <a href="#features" class="btn-secondary">See All Features</a>
+      </div>
+    </div>
 
-
-    <main>
-        <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000"
-            data-bs-pause="false">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="5000">
-                    <img src="./Images/Bg/elegant-attractive-muslim-woman-using-mobile-laptop-searching-online-shopping-information-living-room-home-portrait-happy-woman-purchasing-product-via-online-shopping-pay-using-credit-card.jpg"
-                        class="d-block w-100" alt="Customer making a secure online payment with Royal Pay">
-                    <div class="carousel-caption">
-                        <h5>Banking that moves at your speed</h5>
-                        <p>Send money, pay bills, and manage your account with secure digital banking built for everyday
-                            life.</p>
-                        <div class="caption-actions">
-                            <a class="primary-btn" href="./pages/signup.html">Get Started</a>
-                            <a class="secondary-btn" href="#">Explore Features</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="5000">
-                    <img src="./Images/Bg/african-american-man-woman-home-brainstorming-ideas-their-business.jpg"
-                        class="d-block w-100" alt="Business owners planning finances with Royal Pay">
-                    <div class="carousel-caption">
-                        <h5>Smarter tools for growing money</h5>
-                        <p>Track cash flow, receive payments, and make confident financial decisions from one trusted
-                            platform.</p>
-                        <div class="caption-actions">
-                            <a class="primary-btn" href="./pages/signup.html">Open Account</a>
-                            <a class="secondary-btn" href="#">Business Banking</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="5000">
-                    <img src="./Images/Bg/cheerful-coworkers-discussing-company-investment-plan-work-break-startup-office-african-american-entrepreneurs-working-overhours-financial-strategy-business-concept.jpg"
-                        class="d-block w-100" alt="Royal Pay digital banking support conversation">
-                    <div class="carousel-caption">
-                        <h5>Your bank, always within reach</h5>
-                        <p>Enjoy fast transfers, protected transactions, and support designed to keep your finances
-                            moving.</p>
-                        <div class="caption-actions">
-                            <a class="primary-btn" href="./pages/signup.html">Start Banking</a>
-                            <a class="secondary-btn" href="#">Talk to Support</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+    <!-- Balance Card Graphic -->
+    <div class="balance-card-wrapper">
+      <div class="balance-card">
+        <div class="card-logo">Royal</div>
+        <div class="card-chip"></div>
+        <div style="margin-top: 40px;">
+          <div class="card-label">Total Balance</div>
+          <div class="card-balance">$42,890.00</div>
         </div>
-    </main>
-
-    <section class="trust-strip" aria-label="Royal Pay highlights">
-        <div class="trust-item">
-            <span>2M+</span>
-            <p>secure transactions processed</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Alex Sterling</span>
+          <div style="width: 32px; height: 20px; background: rgba(255,255,255,0.1); border-radius: 4px;"></div>
         </div>
-        <div class="trust-item">
-            <span>24/7</span>
-            <p>banking access and support</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bento Features Grid -->
+  <section id="features" class="features">
+    
+    <!-- High-Yield Savings -->
+    <div class="bento-card bento-card-large">
+      <div>
+        <div class="bento-icon"><i class="bi bi-graph-up-arrow"></i></div>
+        <h3>4.85% APY High-Yield Savings</h3>
+        <p>Watch your wealth grow with rates 10x the national average. No minimums, no fees. Just pure growth.</p>
+        <ul class="bento-list">
+          <li><i class="bi bi-check-circle-fill"></i> FDIC insured up to $2M</li>
+          <li><i class="bi bi-check-circle-fill"></i> Auto-transfer scheduling</li>
+        </ul>
+      </div>
+      <div class="bento-graphic">
+        <div class="chart-header">
+          <div class="label">Growth Projection</div>
+          <div class="value">+$1,420</div>
+          <div class="change">+12.4% YTD</div>
         </div>
-        <div class="trust-item">
-            <span>99.9%</span>
-            <p>reliable digital payment uptime</p>
+        <div class="bars">
+          <div class="bar" style="height: 30%"></div>
+          <div class="bar" style="height: 45%"></div>
+          <div class="bar" style="height: 60%"></div>
+          <div class="bar" style="height: 80%"></div>
+          <div class="bar" style="height: 100%"></div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section class="section-shell finance-suite">
-        <div class="section-copy">
-            <span class="eyebrow">Royal Pay Suite</span>
-            <h2>A modern finance hub for everyday banking.</h2>
-            <p>Control transfers, cards, savings, and spending from a clean dashboard designed for people and growing
-                businesses.</p>
+    <!-- Easy Budgeting -->
+    <div class="bento-card">
+      <div class="bento-icon" style="color: var(--accent-magenta);"><i class="bi bi-pie-chart-fill"></i></div>
+      <h3>Easy Budgeting</h3>
+      <p>AI-powered categorization that actually makes sense. Know exactly where your money goes.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-top: auto;">
+        <div class="progress-row">
+          <div class="progress-label">
+            <span>Entertainment</span>
+            <span>$240 / $500</span>
+          </div>
+          <div class="progress-bar-bg"><div class="progress-fill" style="width: 48%;"></div></div>
         </div>
-        <div class="feature-grid">
-            <article class="feature-card">
-                <span class="feature-icon">01</span>
-                <h3>Instant transfers</h3>
-                <p>Move money quickly with smart confirmations, recipient history, and clear transaction tracking.</p>
-            </article>
-            <article class="feature-card">
-                <span class="feature-icon">02</span>
-                <h3>Budget clarity</h3>
-                <p>See where money goes with category insights, balance snapshots, and spending alerts.</p>
-            </article>
-            <article class="feature-card">
-                <span class="feature-icon">03</span>
-                <h3>Card control</h3>
-                <p>Freeze cards, set limits, and monitor purchases with security settings that stay within reach.</p>
-            </article>
+        <div class="progress-row">
+          <div class="progress-label">
+            <span>Groceries</span>
+            <span style="color: var(--text-muted)">$410 / $800</span>
+          </div>
+          <div class="progress-bar-bg"><div class="progress-fill" style="width: 51%; background: rgba(255,255,255,0.4);"></div></div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <section class="insight-band">
-        <div class="insight-panel">
-            <div>
-                <span class="eyebrow">Live Finance View</span>
-                <h2>Know your money before it moves.</h2>
-            </div>
-            <div class="balance-card">
-                <p>Available Balance</p>
-                <strong>$48,920.00</strong>
-                <span>+12.4% this month</span>
-            </div>
-            <div class="mini-chart" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+    <!-- The Royal Debit -->
+    <div class="bento-card">
+      <div class="bento-icon"><i class="bi bi-credit-card-fill"></i></div>
+      <h3>The Royal Debit</h3>
+      <p>1% cashback on every swipe. Metal finish. Infinite style.</p>
+      <div class="pill-group" style="margin-top: auto;">
+        <div class="pill">No FX Fees</div>
+        <div class="pill">Instant Lock</div>
+        <div class="pill">Apple Pay</div>
+      </div>
+    </div>
+    
+    <!-- Bank-Grade Security -->
+    <div class="bento-card bento-card-large" style="grid-template-columns: 1fr; text-align: center; padding: 60px;">
+      <div class="bento-icon" style="margin: 0 auto 24px auto;"><i class="bi bi-shield-lock-fill"></i></div>
+      <h3>Bank-Grade Security</h3>
+      <p style="max-width: 500px; margin: 0 auto 24px auto;">256-bit encryption and multi-factor authentication protect your assets 24/7. Your peace of mind is our top priority.</p>
+      <a href="#" style="color: var(--accent-magenta); font-weight: 500;">Learn about Security &rarr;</a>
+    </div>
+
+  </section>
+
+  <!-- Footer CTA -->
+  <section class="footer-cta">
+    <h2>Ready to join the financial elite?</h2>
+    <p>Join 2M+ users who have transitioned to the future of personal banking. Account setup takes less than 3 minutes.</p>
+    
+    <div class="cta-action-row">
+      <a href="./pages/signup.html" class="btn-primary">Get Started Now</a>
+      
+      <div class="rating-widget">
+        <div class="avatars">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64&q=80" alt="User">
+          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=64&h=64&q=80" alt="User">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=64&h=64&q=80" alt="User">
         </div>
-    </section>
-
-    <section class="section-shell account-section">
-        <div class="account-card">
-            <h3>Personal Banking</h3>
-            <p>Daily payments, savings goals, virtual cards, and secure account access.</p>
-            <a class="text-link" href="#">View personal tools</a>
+        <div class="rating-text">
+          <strong>4.9/5 Rating</strong><br>on the App Store
         </div>
-        <div class="account-card featured">
-            <h3>Business Banking</h3>
-            <p>Collections, cash-flow visibility, payroll support, and business payment control.</p>
-            <a class="text-link" href="#">View business tools</a>
-        </div>
-        <div class="account-card">
-            <h3>Wealth Planning</h3>
-            <p>Organize long-term goals with smarter saving routines and guided money insights.</p>
-            <a class="text-link" href="#">View wealth tools</a>
-        </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section class="security-section">
-        <div class="security-copy">
-            <span class="eyebrow">Protected by Design</span>
-            <h2>Security that feels invisible until you need it.</h2>
-            <p>Royal Pay combines transaction alerts, device checks, card controls, and encrypted payment flows to keep
-                your money protected.</p>
-        </div>
-        <div class="security-list">
-            <p>Real-time transaction alerts</p>
-            <p>Device and login protection</p>
-            <p>Card freeze and spend limits</p>
-        </div>
-    </section>
-
-    <section class="final-cta">
-        <h2>Build your financial rhythm with Royal Pay.</h2>
-        <p>Start with a faster account experience and keep every payment, card, and goal in one place.</p>
-        <a class="primary-btn" href="./pages/signup.html">Create Free Account</a>
-    </section>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const carousel = document.querySelector("#carouselExampleDark");
-
-            if (!carousel) {
-                return;
-            }
-
-            if (window.bootstrap) {
-                const Carousel = bootstrap.Carousel;
-                const options = {
-                    interval: 5000,
-                    ride: "carousel",
-                    pause: false
-                };
-
-                if (Carousel.getOrCreateInstance) {
-                    Carousel.getOrCreateInstance(carousel, options);
-                } else {
-                    new Carousel(carousel, options);
-                }
-                return;
-            }
-
-            const slides = [...carousel.querySelectorAll(".carousel-item")];
-            const indicators = [...carousel.querySelectorAll(".carousel-indicators button")];
-            let activeIndex = slides.findIndex((slide) => slide.classList.contains("active"));
-
-            if (activeIndex < 0) {
-                activeIndex = 0;
-            }
-
-            setInterval(() => {
-                slides[activeIndex].classList.remove("active");
-                indicators[activeIndex]?.classList.remove("active");
-                indicators[activeIndex]?.removeAttribute("aria-current");
-
-                activeIndex = (activeIndex + 1) % slides.length;
-
-                slides[activeIndex].classList.add("active");
-                indicators[activeIndex]?.classList.add("active");
-                indicators[activeIndex]?.setAttribute("aria-current", "true");
-            }, 5000);
-        });
-    </script>
-
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <h2>Royal Pay</h2>
+      <p>Regulated banking services provided by Royal Bank Trust, Member FDIC. Royal Pay is a financial technology company, not a bank.</p>
+      <p style="margin-top: 16px; font-size: 0.75rem;">&copy; 2024 Royal Pay. Banking Reimagined.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <a href="#">Product</a>
+        <a href="#">Savings</a>
+        <a href="#">Checking</a>
+        <a href="#">Investing</a>
+      </div>
+      <div class="footer-col">
+        <a href="#">Company</a>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <a href="#">Legal</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+      </div>
+      <div class="footer-col">
+        <a href="#">Social</a>
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
 
 </body>
-
 </html>

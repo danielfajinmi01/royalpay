@@ -298,23 +298,11 @@ body.dashboard-page *,
   gap: 24px;
 }
 
-/* Header bar with clean frosting */
-.dash-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: var(--revolut-blur);
-  -webkit-backdrop-filter: var(--revolut-blur);
-  border: 1px solid var(--revolut-border);
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
-  transition: all 0.3s ease;
-}
+/* Top bar — simple flex row inside wrapper, no sticky */
 
-:root[data-theme="dark"] .dash-header {
-  background: rgba(35, 24, 52, 0.75);
+
+:root[data-theme="dark"] .dash-topbar {
+  background: var(--panel);
 }
 
 .header-left .brand img {
@@ -2017,25 +2005,8 @@ body.dashboard-page *,
     gap: 16px;
   }
 
-  /* Sticky header at the top */
-  .dash-header {
-    position: sticky;
-    top: 0;
-    z-index: 90;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 0 0 16px 16px;
-    border: 1px solid var(--revolut-border);
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    padding: 12px 16px;
-  }
+  /* Compact topbar on mobile */
 
-  :root[data-theme="dark"] .dash-header {
-    background: rgba(26, 17, 40, 0.85);
-  }
 
   /* Hide user name label and chevron in trigger */
   .user-name-label,
@@ -2199,7 +2170,7 @@ body.dashboard-page *,
 }
 
 /* Small mobile (≤480px) */
-@media (max-width: 480px) {
+@media (max-width: 300px) {
   .total-balance {
     font-size: 28px;
   }
@@ -2470,16 +2441,7 @@ body.dashboard-page *,
   background: var(--surface);
 }
 
-/* ── UI Design Overrides (Remove Glassmorphism) ── */
-.dash-header {
-  background: var(--surface) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-}
-:root[data-theme="dark"] .dash-header {
-  background: var(--panel) !important;
-}
+/* ── UI Design Overrides ── */
 .dash-main-card .card-inner {
   background: var(--surface) !important;
   backdrop-filter: none !important;
@@ -2517,23 +2479,13 @@ body.dashboard-page *,
   }
   
   /* Chunky Header - Full Width */
-  .dash-header {
-    flex-direction: column !important;
-    gap: 20px !important;
-    align-items: center !important;
-    text-align: center !important;
-    padding: 24px 20px !important;
-    border-radius: 20px !important;
-    width: 100% !important;
-    position: relative !important;
-  }
   .header-left {
     width: 100% !important;
     display: flex !important;
     justify-content: center !important;
   }
   .header-right {
-    width: 100% !important;
+    /* width: 100% !important; */
     justify-content: center !important;
     flex-direction: column !important;
     gap: 16px !important;
