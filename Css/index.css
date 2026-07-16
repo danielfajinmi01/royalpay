@@ -429,3 +429,31 @@ width: 120px;
   .bento-card-large { grid-template-columns: 1fr; grid-column: span 1; }
   .site-footer { flex-direction: column; gap: 40px; align-items: flex-start; }
 }
+
+@media (max-width: 768px) {
+  .navbar { flex-direction: column; gap: 16px; padding: 20px; }
+  .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .hero h1 { font-size: 3rem; }
+  .cta-section h2 { font-size: 2.5rem; }
+  .balance-card-wrapper { max-width: 100%; transform: scale(0.9); }
+  .footer-links { flex-wrap: wrap; gap: 32px; }
+}
+
+@media (max-width: 480px) {
+  .nav-actions { flex-direction: column; width: 100%; gap: 12px; }
+  .nav-login, .nav-cta { width: 100%; text-align: center; }
+  .hero { padding: 180px 5% 60px; }
+  .hero h1 { font-size: 2.25rem; }
+  .hero-actions { flex-direction: column; width: 100%; gap: 16px; }
+  .hero-actions .btn-primary, .hero-actions .btn-secondary { width: 100%; }
+  .balance-card-wrapper { transform: scale(0.85); width: 100%; }
+  .features { padding: 60px 5%; gap: 16px; }
+  .bento-card { padding: 24px; }
+  .bento-card h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 320px) {
+  .hero h1 { font-size: 2rem; }
+  .balance-card-wrapper { transform: scale(0.75); }
+  .nav-links { gap: 12px; font-size: 0.9rem; }
+}

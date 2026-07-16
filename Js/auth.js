@@ -1,6 +1,7 @@
 import { auth, db } from "./firebase-config.js";
 import {
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -143,13 +144,14 @@ onAuthStateChanged(auth, (user) => {
 
 // ─── DOM Ready ─────────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector(".login-form");
-  const loginBtn = document.querySelector(".login-btn");
-  const emailInput = document.querySelector("#email");
-  const passwordInput = document.querySelector("#password");
-  const rememberCheck = document.querySelector(".remember input[type='checkbox']");
+  // ── DOM Elements ─────────────────────────────────────────────────────────────
+  const form = document.querySelector(".auth-form");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const loginBtn = document.querySelector(".btn-auth-primary");
+  const rememberCheck = document.querySelector("#terms"); // Checkbox is used for terms in signup, but let's grab it by terms ID or gracefully degrade
   const passwordToggle = document.querySelector("[data-password-toggle]");
-  const googleBtn = document.querySelector(".google-btn");
+  const googleBtn = document.querySelector("#googleBtn");
   const forgotLink = document.querySelector(".forgot-link");
 
   // ── Check if redirected due to suspension ───────────────────────────────────
@@ -171,20 +173,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Clear error on typing ────────────────────────────────────────────────────
   [emailInput, passwordInput].forEach((el) => el?.addEventListener("input", clearError));
 
-  // ── Email / Password Login ───────────────────────────────────────────────────
+  // ── Email / Password Login & Signup ──────────────────────────────────────────
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearError();
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+    const fullNameInput = document.getElementById("fullName");
+    const isSignup = !!fullNameInput;
 
-    if (!email || !password) {
-      showError("Please enter your email and password.");
+    if (!email || !password || (isSignup && !fullNameInput.value.trim())) {
+      showError("Please fill in all required fields.");
       return;
     }
 
-    setLoading(loginBtn, "Signing in…");
+    setLoading(loginBtn, isSignup ? "Creating Account…" : "Signing in…");
 
     try {
       // Honour "remember me" checkbox
@@ -193,7 +197,21 @@ document.addEventListener("DOMContentLoaded", () => {
         : browserSessionPersistence;
       await setPersistence(auth, persistence);
 
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      let user;
+      if (isSignup) {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        user = userCredential.user;
+        // Optionally save full name to user doc
+        await setDoc(doc(db, "users", user.uid), {
+          name: fullNameInput.value.trim(),
+          email: user.email,
+          createdAt: serverTimestamp(),
+          role: "user"
+        });
+      } else {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        user = userCredential.user;
+      }
 
       // Check if user is banned
       const userRef = doc(db, "users", user.uid);
