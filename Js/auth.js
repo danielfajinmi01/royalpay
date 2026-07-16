@@ -20,11 +20,16 @@ const googleProvider = new GoogleAuthProvider();
  * Redirect to loader then dashboard after a short branded delay.
  */
 async function redirectToDashboard(user) {
-  const snap = await getDoc(doc(db, "users", user.uid));
-  if (snap.exists() && snap.data().role === "admin") {
-    window.location.href = "./admin-dashboard.html";
-  } else {
-    window.location.href = "./dashboard.html";
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists() && snap.data().role === "admin") {
+      window.location.href = "./admin-dashboard.html";
+    } else {
+      window.location.href = "./dashboard.html";
+    }
+  } catch (err) {
+    console.error("Error redirecting to dashboard:", err);
+    window.location.href = "./dashboard.html"; // fallback
   }
 }
 
@@ -37,8 +42,12 @@ function showError(message) {
   if (!errorEl) {
     errorEl = document.createElement("p");
     errorEl.className = "auth-error";
-    const form = document.querySelector(".login-form");
-    form.prepend(errorEl);
+    const form = document.querySelector(".auth-form");
+    if (form) {
+      form.prepend(errorEl);
+    } else {
+      document.body.prepend(errorEl);
+    }
   }
   errorEl.textContent = message;
   errorEl.classList.add("visible");
@@ -135,9 +144,11 @@ async function ensureUserDoc(user) {
 }
 
 // ─── Auth State Guard ──────────────────────────────────────────────────────────
+let isAuthFlow = false;
+
 // If user is already logged in when they hit the login page, send them to the dashboard.
 onAuthStateChanged(auth, (user) => {
-  if (user) {
+  if (user && !isAuthFlow) {
     redirectToDashboard(user);
   }
 });
@@ -188,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    isAuthFlow = true;
     setLoading(loginBtn, isSignup ? "Creating Account…" : "Signing in…");
 
     try {
@@ -218,6 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists() && userSnap.data().status === "banned") {
         await signOut(auth);
+        isAuthFlow = false;
         showError("Your account has been suspended by the administrator.");
         clearLoading(loginBtn);
         return;
@@ -226,6 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await ensureUserDoc(user);
       redirectToDashboard(user);
     } catch (err) {
+      isAuthFlow = false;
       clearLoading(loginBtn);
       showError(friendlyError(err.code));
     }
@@ -234,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── Google Sign-In ───────────────────────────────────────────────────────────
   googleBtn?.addEventListener("click", async () => {
     clearError();
+    isAuthFlow = true;
     setLoading(googleBtn, "Opening Google…");
 
     try {
@@ -245,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists() && userSnap.data().status === "banned") {
         await signOut(auth);
+        isAuthFlow = false;
         showError("Your account has been suspended by the administrator.");
         clearLoading(googleBtn);
         return;
@@ -253,6 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await ensureUserDoc(user);
       redirectToDashboard(user);
     } catch (err) {
+      isAuthFlow = false;
       clearLoading(googleBtn);
       if (err.code !== "auth/popup-closed-by-user") {
         showError(friendlyError(err.code));
