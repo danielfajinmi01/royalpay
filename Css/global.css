@@ -212,3 +212,31 @@ body.solutions-page::after {
   animation: floatBloop 18s ease-in-out infinite reverse;
   filter: blur(60px);
 }
+
+/* ── Glowing Blobs (Used in dashboard) ── */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.blob-one {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(128,63,198,0.2), transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: floatBloop 12s ease-in-out infinite alternate;
+}
+
+.blob-two {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(92,219,179,0.15), transparent 70%);
+  bottom: -150px;
+  right: -100px;
+  animation: floatBloop 15s ease-in-out infinite alternate-reverse;
+}
