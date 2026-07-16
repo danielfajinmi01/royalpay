@@ -117,21 +117,39 @@ async function fetchRates() {
     exchangeRates.USDT = 1 / usdtUSD;
     exchangeRates.NGN  = ngnRate || 1500;
 
-    document.getElementById("tickerBTC").textContent  = `$${btcUSD.toLocaleString()}`;
-    triggerPulse("tickerBTC");
-    document.getElementById("tickerETH").textContent  = `$${ethUSD.toLocaleString()}`;
-    triggerPulse("tickerETH");
-    document.getElementById("tickerUSDT").textContent = `$${usdtUSD.toFixed(4)}`;
-    triggerPulse("tickerUSDT");
+    const tBtc = document.getElementById("tickerBTC");
+    if (tBtc) {
+      tBtc.textContent  = `$${btcUSD.toLocaleString()}`;
+      triggerPulse("tickerBTC");
+    }
+    const tEth = document.getElementById("tickerETH");
+    if (tEth) {
+      tEth.textContent  = `$${ethUSD.toLocaleString()}`;
+      triggerPulse("tickerETH");
+    }
+    const tUsdt = document.getElementById("tickerUSDT");
+    if (tUsdt) {
+      tUsdt.textContent = `$${usdtUSD.toFixed(4)}`;
+      triggerPulse("tickerUSDT");
+    }
 
     if (currentUserDoc) updateUserUI(currentUserDoc);
   } catch (_) {
-    document.getElementById("tickerBTC").textContent  = "$68,500 (est.)";
-    triggerPulse("tickerBTC");
-    document.getElementById("tickerETH").textContent  = "$3,750 (est.)";
-    triggerPulse("tickerETH");
-    document.getElementById("tickerUSDT").textContent = "$1.00";
-    triggerPulse("tickerUSDT");
+    const tBtc = document.getElementById("tickerBTC");
+    if (tBtc) {
+      tBtc.textContent  = "$68,500 (est.)";
+      triggerPulse("tickerBTC");
+    }
+    const tEth = document.getElementById("tickerETH");
+    if (tEth) {
+      tEth.textContent  = "$3,750 (est.)";
+      triggerPulse("tickerETH");
+    }
+    const tUsdt = document.getElementById("tickerUSDT");
+    if (tUsdt) {
+      tUsdt.textContent = "$1.00";
+      triggerPulse("tickerUSDT");
+    }
   }
 }
 
@@ -180,14 +198,20 @@ function updateUserUI(data) {
     userAvatar.style.display        = "none";
   }
 
-  document.getElementById("displayAccountNumber").textContent = data.accountNumber || "PENDING";
-  document.getElementById("metaEmail").textContent = data.email || "Not set";
-  if (data.createdAt) {
-    const d = new Date(data.createdAt.seconds * 1000);
-    document.getElementById("metaJoined").textContent =
-      d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
-  } else {
-    document.getElementById("metaJoined").textContent = "Instant Setup";
+  const accEl = document.getElementById("displayAccountNumber");
+  if (accEl) accEl.textContent = data.accountNumber || "PENDING";
+  
+  const emailEl = document.getElementById("metaEmail");
+  if (emailEl) emailEl.textContent = data.email || "Not set";
+  
+  const joinedEl = document.getElementById("metaJoined");
+  if (joinedEl) {
+    if (data.createdAt) {
+      const d = new Date(data.createdAt.seconds * 1000);
+      joinedEl.textContent = d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+    } else {
+      joinedEl.textContent = "Instant Setup";
+    }
   }
 
   const usdBal  = data.walletBalance || 0;
