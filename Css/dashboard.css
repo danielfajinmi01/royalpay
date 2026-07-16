@@ -2461,219 +2461,142 @@ body.dashboard-page *,
   background: var(--panel) !important;
 }
 
+/* ── New Bento Box Redesign CSS ── */
+.new-layout {
+  display: flex !important;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+.dash-row {
+  display: grid;
+  gap: 24px;
+}
+
+.dash-row.row-1 { grid-template-columns: 2fr 1fr; }
+.dash-row.row-3 { grid-template-columns: 1fr 2fr; }
+.dash-row.row-4 { grid-template-columns: 1fr; }
+
+.dash-box {
+  background: rgba(25, 0, 48, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-radius: 20px;
+  padding: 24px;
+}
+
+/* Assets Box */
+.assets-box { display: flex; flex-direction: column; justify-content: space-between; }
+.assets-box .welcome-text { margin-bottom: 32px; }
+.assets-box .currency-pills { display: flex; gap: 8px; margin-top: 24px; flex-wrap: wrap; }
+.currency-pills .pill {
+  padding: 6px 16px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-secondary, #aaa);
+  font-size: 13px;
+  cursor: pointer;
+}
+.currency-pills .pill.active, .currency-pills .pill:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+/* Profile Box */
+.profile-box { display: flex; flex-direction: column; }
+.profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.avatar-circle { width: 56px; height: 56px; border-radius: 50%; background: #6b21a8; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: #fff; }
+.profile-title h3 { font-size: 18px; margin: 0 0 4px; color: #fff; }
+.profile-title .tier { font-size: 12px; color: #aaa; }
+.divider { border: 0; height: 1px; background: rgba(255,255,255,0.1); margin: 0 0 24px 0; }
+.detail-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+.detail-row .lbl { font-size: 11px; color: #aaa; }
+.detail-row .val { font-size: 14px; color: #fff; font-weight: 500; }
+.btn-edit-profile { margin-top: auto; width: 100%; padding: 12px; background: rgba(255,255,255,0.1); border: none; border-radius: 12px; color: #fff; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+.btn-edit-profile:hover { background: rgba(255,255,255,0.15); }
+
+/* Wallets */
+.wallets-grid-new { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.wallet-bento { background: rgba(25, 0, 48, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; height: 160px; }
+.bento-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.bento-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); font-size: 18px; }
+.bento-icon.btc { color: #f7931a; background: rgba(247, 147, 26, 0.15); }
+.bento-icon.eth { color: #627eea; background: rgba(98, 126, 234, 0.15); }
+.bento-icon.usdt { color: #26a17b; background: rgba(38, 161, 123, 0.15); }
+.bento-type { font-size: 10px; font-weight: 700; color: #aaa; letter-spacing: 1px; }
+.bento-bottom { display: flex; flex-direction: column; gap: 4px; }
+.wallet-name { font-size: 12px; color: #ccc; }
+.wallet-val { font-size: 24px; color: #fff; }
+.wallet-trend { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+.wallet-trend.positive { color: #22c55e; }
+.wallet-trend.negative { color: #ef4444; }
+.wallet-trend.neutral { color: #94a3b8; }
+
+/* Quick Actions */
+.left-actions h3, .ledger-box h3, .distribution-box h3 { font-size: 18px; margin: 0 0 20px 0; font-weight: 600; color: #fff; }
+.quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.bento-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 24px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #fff; cursor: pointer; transition: all 0.2s; }
+.bento-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+.bento-btn i { font-size: 24px; color: #fff; }
+.refer-box { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; position: relative; overflow: hidden; }
+.refer-box h4 { margin: 0 0 8px 0; font-size: 14px; color: #fff; }
+.refer-box p { margin: 0 0 16px 0; font-size: 12px; color: #aaa; line-height: 1.4; max-width: 80%; }
+.copy-link span { font-size: 12px; color: #a855f7; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.bg-icon { position: absolute; right: -10px; bottom: -10px; font-size: 80px; color: rgba(255,255,255,0.03); line-height: 1; }
+
+/* Ledger */
+.ledger-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.ledger-header p { margin: 4px 0 0 0; font-size: 12px; color: #aaa; }
+.ledger-tabs { display: flex; gap: 8px; }
+.ledger-tabs button { background: rgba(255,255,255,0.05); border: none; border-radius: 99px; padding: 6px 16px; color: #aaa; font-size: 12px; cursor: pointer; }
+.ledger-tabs button.active { background: #6b21a8; color: #fff; }
+.ledger-table { width: 100%; border-collapse: collapse; }
+.ledger-table th { text-align: left; padding: 12px 16px; font-size: 11px; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.1); text-transform: uppercase; letter-spacing: 1px; }
+.ledger-table td { padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.empty-state { text-align: center; padding: 60px 20px; color: #aaa; }
+.empty-state i { font-size: 32px; margin-bottom: 12px; opacity: 0.5; }
+.ledger-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 12px; color: #aaa; }
+.pagination { display: flex; gap: 8px; }
+.pagination button { background: rgba(255,255,255,0.1); border: none; border-radius: 6px; width: 28px; height: 28px; color: #fff; cursor: pointer; }
+.pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Distribution */
+.distribution-box { text-align: center; padding: 60px 20px; }
+.distribution-box p { color: #aaa; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+.dist-legend { display: flex; justify-content: center; gap: 24px; }
+.dist-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #fff; }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.fiat { background: #d8b4fe; }
+.dot.crypto { background: #2dd4bf; }
+.dot.pending { background: #e879f9; }
+
 /* ── Mobile Responsiveness for Dashboard ── */
 @media (max-width: 900px) {
-  .dash-content {
+  .dash-row.row-1, .dash-row.row-3 {
     grid-template-columns: 1fr !important;
   }
-  .welcome-banner,
-  .dash-transactions {
-    grid-column: span 1 !important;
+  .wallets-grid-new {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
 @media (max-width: 600px) {
-  .dashboard-wrapper {
-    padding: 16px 12px !important;
-    gap: 20px !important;
+  .wallets-grid-new {
+    grid-template-columns: 1fr !important;
   }
-  
-  /* Chunky Header - Full Width */
-  .header-left {
-    width: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
+  .quick-grid {
+    grid-template-columns: 1fr !important;
   }
-  .header-right {
-    /* width: 100% !important; */
-    justify-content: center !important;
-    flex-direction: column !important;
-    gap: 16px !important;
+  .dist-legend {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
-  .theme-toggle {
-    position: absolute !important;
-    top: 20px !important;
-    right: 20px !important;
-  }
-  
-  /* Avatar & Name Styling */
-  .user-menu-trigger {
-    flex-direction: column !important;
-    gap: 12px !important;
-    width: 100% !important;
-  }
-  .user-name-label {
-    display: block !important;
-    font-size: 18px !important;
-    font-weight: 800 !important;
-    margin-bottom: 8px !important;
-  }
-  .user-menu-trigger > .bi-chevron-down {
-    display: none !important; /* Hide the dropdown arrow */
-  }
-
-  /* Permanently visible chunk buttons for Edit Profile / Logout */
-  .user-dropdown {
-    position: static !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    background: transparent !important;
-  }
-  .user-dropdown button {
-    padding: 16px !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    border-radius: 14px !important;
-    background: var(--soft) !important;
-    justify-content: center !important;
-  }
-  .user-dropdown button.logout-action {
-    background: rgba(239, 68, 68, 0.1) !important;
-    color: #ef4444 !important;
-  }
-
-  /* Main Balance takes full space */
-  .dash-main-card .card-inner {
-    padding: 24px 20px !important;
-    text-align: center !important;
-    border-radius: 20px !important;
-  }
-  .card-header-row {
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 16px !important;
-  }
-  .card-eyebrow {
-    font-size: 14px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-  }
-  .total-balance {
-    font-size: 46px !important; /* Huge bold balance */
-    width: 100% !important;
-    margin-top: 8px !important;
-  }
-  .currency-switcher-wrap {
-    width: 100% !important;
-    justify-content: center !important;
-  }
-  .currency-select {
-    padding: 10px 16px !important;
-    font-size: 14px !important;
-  }
-
-  /* Wallets: Two-Two Grid, Big Text */
-  .wallets-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    margin-top: 12px !important;
-  }
-  .wallet-tile {
-    padding: 18px 14px !important;
-    border-radius: 16px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
-  .wallet-tile .tile-head {
-    font-size: 13px !important;
-    margin-bottom: 10px !important;
-    justify-content: center !important;
-  }
-  .wallet-tile .tile-val {
-    font-size: 17px !important;
-    font-weight: 800 !important;
-  }
-
-  /* Live Rates: Block them Two Two */
-  .ticker-container {
-    overflow: visible !important;
-    padding-top: 24px !important;
-    display: block !important;
-  }
-  .ticker-content {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    width: 100% !important;
-  }
-  .ticker-pill {
-    width: 100% !important;
-    min-width: 0 !important;
-    padding: 16px 12px !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    border-radius: 16px !important;
-  }
-  .coin-info-wrap {
-    align-items: center !important;
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
-  }
-  .coin-symbol {
-    font-size: 16px !important;
-    font-weight: 800 !important;
-  }
-  .coin-price {
-    font-size: 15px !important;
-  }
-  .percentage-badge {
-    position: static !important;
-    display: inline-block !important;
-    padding: 6px 10px !important;
-    font-size: 13px !important;
-  }
-
-  /* Quick Actions: Chunky and Bold */
-  .quick-actions {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px !important;
-    margin-top: 20px !important;
-  }
-  .action-btn {
-    width: 100% !important;
-    padding: 20px 12px !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    border-radius: 18px !important;
-  }
-  .icon-circle {
-    width: 52px !important;
-    height: 52px !important;
-    font-size: 22px !important;
-    margin-bottom: 12px !important;
-  }
-
-  /* Transactions & Info: High Legibility */
-  .info-card, .tx-card {
-    padding: 24px 16px !important;
-    border-radius: 20px !important;
-  }
-  .tx-filters {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-  }
-  .filter-tab {
-    padding: 10px 16px !important;
-    font-size: 14px !important;
-    border-radius: 12px !important;
-    flex: 1 1 calc(50% - 10px) !important;
-    text-align: center !important;
-  }
-  .tx-table th, .tx-table td {
-    padding: 14px 10px !important;
-    font-size: 14px !important;
+  .dash-box {
+    padding: 16px;
   }
 }

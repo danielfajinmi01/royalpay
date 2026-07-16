@@ -67,186 +67,159 @@
       </div>
     </div>
     <!-- ── Dashboard Body ── -->
-    <main class="dash-content">
+    <!-- ── Dashboard Body ── -->
+    <main class="dash-content new-layout">
+      
+      <!-- ── ROW 1: Assets & Profile ── -->
+      <div class="dash-row row-1">
+        <!-- Assets Box (2/3 width) -->
+        <section class="dash-box assets-box">
+          <div class="welcome-text">
+            <span class="greeting-text" id="dashboardGreeting">Welcome back,</span>
+            <span class="user-name-title" id="dashboardUserName">Royal Pay User</span>
+          </div>
+          <div class="assets-content">
+            <span class="card-eyebrow">Total Assets (USD Value)</span>
+            <div class="total-balance-container">
+              <h1 class="total-balance" id="totalBalanceUSD">$0.00</h1>
+            </div>
+            <div class="currency-pills">
+              <button class="pill active">USD ($)</button>
+              <button class="pill">NGN (₦)</button>
+              <button class="pill">BTC (₿)</button>
+              <button class="pill">ETH (Ξ)</button>
+              <button class="pill">USDT (₮)</button>
+            </div>
+          </div>
+        </section>
 
-      <!-- ── Welcome Greeting Banner ── -->
-      <div class="welcome-banner">
-        <div class="welcome-banner-content">
-          <span class="greeting-text" id="dashboardGreeting">Welcome back,</span>
-          <h2 class="user-name-title" id="dashboardUserName">Royal Pay User</h2>
+        <!-- Profile Box (1/3 width) -->
+        <section class="dash-box profile-box">
+          <div class="profile-header">
+            <div class="avatar-circle">RU</div>
+            <div class="profile-title">
+              <h3>Royal Pay User</h3>
+              <span class="tier">Standard Tier Account</span>
+            </div>
+          </div>
+          <hr class="divider">
+          <div class="profile-details">
+            <div class="detail-row">
+              <span class="lbl">Account Number</span>
+              <span class="val">RP-8829-0012 <i class="bi bi-files"></i></span>
+            </div>
+            <div class="detail-row">
+              <span class="lbl">Email Address</span>
+              <span class="val">user@royal-pay.io</span>
+            </div>
+          </div>
+          <button type="button" class="btn-edit-profile" id="editProfileBtn"><i class="bi bi-pencil"></i> Edit Profile</button>
+        </section>
+      </div>
+
+      <!-- ── ROW 2: Wallets ── -->
+      <div class="dash-row row-2">
+        <div class="wallets-grid-new">
+          <div class="wallet-bento fiat-wallet">
+            <div class="bento-top">
+              <div class="bento-icon"><i class="bi bi-cash-stack"></i></div>
+              <span class="bento-type">FIAT</span>
+            </div>
+            <div class="bento-bottom">
+              <div class="wallet-name">USD Wallet</div>
+              <strong class="wallet-val" id="usdWalletVal">$0.00</strong>
+              <div class="wallet-trend negative"><i class="bi bi-graph-down"></i> -0.12%</div>
+            </div>
+          </div>
+          <div class="wallet-bento crypto-wallet">
+            <div class="bento-top">
+              <div class="bento-icon btc"><i class="bi bi-currency-bitcoin"></i></div>
+              <span class="bento-type">CRYPTO</span>
+            </div>
+            <div class="bento-bottom">
+              <div class="wallet-name">Bitcoin</div>
+              <strong class="wallet-val" id="btcWalletVal">0.00000 BTC</strong>
+              <div class="wallet-trend positive"><i class="bi bi-graph-up"></i> +1.84%</div>
+            </div>
+          </div>
+          <div class="wallet-bento crypto-wallet">
+            <div class="bento-top">
+              <div class="bento-icon eth"><i class="bi bi-coin"></i></div>
+              <span class="bento-type">CRYPTO</span>
+            </div>
+            <div class="bento-bottom">
+              <div class="wallet-name">Ethereum</div>
+              <strong class="wallet-val" id="ethWalletVal">0.0000 ETH</strong>
+              <div class="wallet-trend positive"><i class="bi bi-graph-up"></i> +2.45%</div>
+            </div>
+          </div>
+          <div class="wallet-bento stable-wallet">
+            <div class="bento-top">
+              <div class="bento-icon usdt"><span class="t-badge">₮</span></div>
+              <span class="bento-type">STABLE</span>
+            </div>
+            <div class="bento-bottom">
+              <div class="wallet-name">Tether (USDT)</div>
+              <strong class="wallet-val" id="usdtWalletVal">$0.00 USDT</strong>
+              <div class="wallet-trend neutral"><i class="bi bi-dash"></i> +0.01%</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ── Left: Balance + Actions ── -->
-      <section class="dash-main-card">
-        <div class="card-inner">
-          <div class="card-header-row">
+      <!-- ── ROW 3: Quick Actions & Ledger ── -->
+      <div class="dash-row row-3">
+        
+        <!-- Left: Quick Actions -->
+        <section class="dash-box left-actions">
+          <h3>Quick Actions</h3>
+          <div class="quick-grid">
+            <button class="bento-btn" type="button" id="openTransferModal">
+              <i class="bi bi-send"></i>
+              <span>Send Money</span>
+            </button>
+            <button class="bento-btn" type="button" id="openDepositModal">
+              <i class="bi bi-plus-circle"></i>
+              <span>Add Funds</span>
+            </button>
+            <button class="bento-btn" type="button" id="openExchangeModal">
+              <i class="bi bi-arrow-repeat"></i>
+              <span>Convert Crypto</span>
+            </button>
+            <button class="bento-btn" type="button" id="openGrantModal">
+              <i class="bi bi-file-earmark-text"></i>
+              <span>Grant App</span>
+            </button>
+          </div>
+          
+          <div class="refer-box">
+            <h4>Refer & Earn</h4>
+            <p>Invite friends and earn up to $50 per successful signup.</p>
+            <div class="copy-link">
+              <span>Copy Link <i class="bi bi-link-45deg"></i></span>
+            </div>
+            <i class="bi bi-people-fill bg-icon"></i>
+          </div>
+        </section>
+
+        <!-- Right: Transaction Ledger -->
+        <section class="dash-box ledger-box">
+          <div class="ledger-header">
             <div>
-              <span class="card-eyebrow">Total Assets (USD Value)</span>
-              <div class="total-balance-container">
-                <h1 class="total-balance" id="totalBalanceUSD">$0.00</h1>
-                <button type="button" class="balance-toggle-btn" id="toggleBalanceVisibility"
-                  aria-label="Toggle balance visibility">
-                  <i class="bi bi-eye"></i>
-                </button>
-              </div>
-            </div>
-            <div class="currency-switcher-wrap">
-              <label for="displayCurrency"><i class="bi bi-globe"></i> View in</label>
-              <select id="displayCurrency" class="currency-select">
-                <option value="USD">USD ($)</option>
-                <option value="NGN">NGN (₦)</option>
-                <option value="BTC">BTC (₿)</option>
-                <option value="ETH">ETH (Ξ)</option>
-                <option value="USDT">USDT (₮)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="wallets-grid">
-            <div class="wallet-tile usd">
-              <div class="tile-head"><span>USD Wallet</span><i class="bi bi-cash-stack"></i></div>
-              <strong class="tile-val" id="usdWalletVal">$0.00</strong>
-            </div>
-            <div class="wallet-tile btc">
-              <div class="tile-head"><span>Bitcoin</span><i class="bi bi-currency-bitcoin"></i></div>
-              <strong class="tile-val" id="btcWalletVal">0.00000 BTC</strong>
-            </div>
-            <div class="wallet-tile eth">
-              <div class="tile-head"><span>Ethereum</span><i class="bi bi-coin"></i></div>
-              <strong class="tile-val" id="ethWalletVal">0.0000 ETH</strong>
-            </div>
-            <div class="wallet-tile usdt">
-              <div class="tile-head"><span>Tether (USDT)</span><span class="t-badge">₮</span></div>
-              <strong class="tile-val" id="usdtWalletVal">$0.00 USDT</strong>
-            </div>
-          </div>
-
-          <div class="ticker-container">
-            <div class="ticker-content" id="cryptoTicker">
-              <!-- BTC Pill Card -->
-              <div class="ticker-pill btc-pill">
-                <div class="coin-icon-bg"><i class="bi bi-currency-bitcoin"></i></div>
-                <div class="coin-info-wrap">
-                  <span class="coin-symbol">BTC</span>
-                  <span class="coin-price" id="tickerBTC">Loading...</span>
-                </div>
-                <span class="percentage-badge positive">+1.84%</span>
-              </div>
-              <!-- ETH Pill Card -->
-              <div class="ticker-pill eth-pill">
-                <div class="coin-icon-bg"><i class="bi bi-coin"></i></div>
-                <div class="coin-info-wrap">
-                  <span class="coin-symbol">ETH</span>
-                  <span class="coin-price" id="tickerETH">Loading...</span>
-                </div>
-                <span class="percentage-badge positive">+2.45%</span>
-              </div>
-              <!-- USDT Pill Card -->
-              <div class="ticker-pill usdt-pill">
-                <div class="coin-icon-bg"><span class="t-badge">₮</span></div>
-                <div class="coin-info-wrap">
-                  <span class="coin-symbol">USDT</span>
-                  <span class="coin-price" id="tickerUSDT">Loading...</span>
-                </div>
-                <span class="percentage-badge neutral">+0.01%</span>
-              </div>
-              <!-- NGN Pill Card -->
-              <div class="ticker-pill ngn-pill">
-                <div class="coin-icon-bg"><i class="bi bi-bank"></i></div>
-                <div class="coin-info-wrap">
-                  <span class="coin-symbol">NGN</span>
-                  <span class="coin-price">₦1,500.00</span>
-                </div>
-                <span class="percentage-badge negative">-0.12%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="quick-actions">
-          <button class="action-btn" type="button" id="openTransferModal">
-            <span class="icon-circle shadow-purple"><i class="bi bi-arrow-up-right"></i></span>
-            <span>Send Money</span>
-          </button>
-          <button class="action-btn" type="button" id="openDepositModal">
-            <span class="icon-circle shadow-mint"><i class="bi bi-wallet2"></i></span>
-            <span>Add Funds</span>
-          </button>
-          <button class="action-btn" type="button" id="openExchangeModal">
-            <span class="icon-circle shadow-gold"><i class="bi bi-arrow-left-right"></i></span>
-            <span>Convert Crypto</span>
-          </button>
-          <button class="action-btn" type="button" id="openGrantModal">
-            <span class="icon-circle shadow-orange"><i class="bi bi-award-fill"></i></span>
-            <span class="action-label-highlight">Grant Application</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- ── Right: Account Details + Activity ── -->
-      <section class="dash-side-info">
-        <div class="info-card profile-card">
-          <span class="info-label">Account Details</span>
-          <div class="account-number-block">
-            <p>Royal Pay Account Number</p>
-            <div class="acc-num-row">
-              <strong id="displayAccountNumber">Loading...</strong>
-              <button class="copy-acc-btn" id="copyAccBtn" title="Copy Account Number" aria-label="Copy Account Number">
-                <i class="bi bi-copy"></i>
-              </button>
-            </div>
-          </div>
-          <div class="user-meta-list">
-            <div class="meta-item">
-              <span class="lbl">Email Address</span>
-              <span class="val" id="metaEmail">Loading...</span>
-            </div>
-            <div class="meta-item">
-              <span class="lbl">Registered On</span>
-              <span class="val" id="metaJoined">Loading...</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-card notif-widget">
-          <div class="notif-header">
-            <span>Activity Log</span>
-            <i class="bi bi-bell-fill"></i>
-          </div>
-          <div class="notif-list" id="notifList">
-            <div class="notif-placeholder">No recent alerts.</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Bottom: Transaction Ledger ── -->
-      <section class="dash-transactions">
-        <div class="tx-card">
-          <div class="tx-card-header">
-            <div class="tx-header-left">
-              <h2>Transaction Ledger</h2>
+              <h3>Transaction Ledger</h3>
               <p>Click any row to view full details</p>
             </div>
-            <div class="search-box">
-              <i class="bi bi-search"></i>
-              <input type="text" id="txSearchInput" placeholder="Search references or accounts...">
+            <div class="ledger-tabs">
+              <button class="active">All</button>
+              <button>Transfers</button>
+              <button>Grants</button>
             </div>
           </div>
-
-          <div class="tx-filters">
-            <button class="filter-tab active" data-filter="all">All</button>
-            <button class="filter-tab" data-filter="transfer">Transfers</button>
-            <button class="filter-tab" data-filter="deposit">Deposits</button>
-            <button class="filter-tab" data-filter="grant">Grants</button>
-            <button class="filter-tab" data-filter="conversion">Conversions</button>
-          </div>
-
-          <div class="table-scroll-container">
-            <table class="tx-table">
+          
+          <div class="ledger-table-wrap">
+            <table class="ledger-table">
               <thead>
                 <tr>
-                  <th style="width: 50px;"></th>
                   <th>Transaction Details</th>
                   <th>Date</th>
                   <th class="text-right">Amount</th>
@@ -254,13 +227,37 @@
               </thead>
               <tbody id="txTableBody">
                 <tr>
-                  <td colspan="4" class="table-empty">No transactions yet.</td>
+                  <td colspan="3" class="empty-state">
+                    <i class="bi bi-clock-history"></i>
+                    <p>No transactions yet.</p>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
-      </section>
+          
+          <div class="ledger-footer">
+            <span>Showing 0 of 0 entries</span>
+            <div class="pagination">
+              <button disabled><i class="bi bi-chevron-left"></i></button>
+              <button disabled><i class="bi bi-chevron-right"></i></button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ── ROW 4: Asset Distribution ── -->
+      <div class="dash-row row-4">
+        <section class="dash-box distribution-box">
+          <h3>Asset Distribution</h3>
+          <p>Visualize your wealth across different asset classes.<br>Coming soon to your fluid dashboard.</p>
+          <div class="dist-legend">
+            <span class="dist-item"><span class="dot fiat"></span> Fiat</span>
+            <span class="dist-item"><span class="dot crypto"></span> Crypto</span>
+            <span class="dist-item"><span class="dot pending"></span> Pending</span>
+          </div>
+        </section>
+      </div>
 
     </main>
   </div>
