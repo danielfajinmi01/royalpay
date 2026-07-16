@@ -54,8 +54,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background: radial-gradient(circle at 15% 0%, rgba(157, 78, 221, 0.15) 0%, transparent 40%),
-              radial-gradient(circle at 85% 100%, rgba(224, 0, 255, 0.1) 0%, transparent 40%),
-              var(--bg-base);
+              radial-gradient(circle at 85% 100%, rgba(224, 0, 255, 0.1) 0%, transparent 40%);
+  background-color: transparent;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -163,4 +163,52 @@ ul {
 
 .input-field::placeholder {
   color: var(--text-muted);
+}
+
+/* Animated Background Bloops */
+@keyframes floatBloop {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+}
+
+.auth-page::before,
+body.pricing-page::before,
+body.solutions-page::before {
+  content: '';
+  position: fixed;
+  top: -20%; left: -10%;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+  animation: floatBloop 15s ease-in-out infinite;
+  filter: blur(60px);
+}
+
+.auth-page::after,
+body.pricing-page::after,
+body.solutions-page::after {
+  content: '';
+  position: fixed;
+  bottom: -20%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(224, 0, 255, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+  animation: floatBloop 18s ease-in-out infinite reverse;
+  filter: blur(60px);
 }

@@ -13,12 +13,12 @@
 
   <!-- Global Navbar -->
   <nav class="navbar">
-    <div class="nav-brand">Royal Pay</div>
+    <div class="nav-brand"><a href="./index.html"><img src="./Images/Logo/royal-pay-white.png" alt="Royal Pay" style="width: 120px; display: block;"></a></div>
     <ul class="nav-links">
       <li><a href="#">Personal</a></li>
       <li><a href="#">Business</a></li>
-      <li><a href="#">Solutions</a></li>
-      <li><a href="#">Pricing</a></li>
+      <li><a href="./pages/solutions.html">Solutions</a></li>
+      <li><a href="./pages/pricing.html">Pricing</a></li>
     </ul>
     <div class="nav-actions">
       <a href="./pages/login.html" class="nav-login">Login</a>
@@ -44,15 +44,22 @@
     <!-- Balance Card Graphic -->
     <div class="balance-card-wrapper">
       <div class="balance-card">
-        <div class="card-logo">Royal</div>
-        <div class="card-chip"></div>
-        <div style="margin-top: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div class="card-logo">Royal</div>
+          <div class="card-chip"></div>
+        </div>
+        
+        <div>
           <div class="card-label">Total Balance</div>
           <div class="card-balance">$42,890.00</div>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 0.75rem; color: var(--text-muted);">Alex Sterling</span>
-          <div style="width: 32px; height: 20px; background: rgba(255,255,255,0.1); border-radius: 4px;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -50px;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-family: monospace; letter-spacing: 0.05em;">ALEX STERLING</span>
+          <div style="width: 32px; height: 20px; background: rgba(255,255,255,0.1); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 12px; height: 12px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+            <div style="width: 12px; height: 12px; background: rgba(255,255,255,0.2); border-radius: 50%; margin-left: -6px;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -158,7 +165,7 @@
   <!-- Global Footer -->
   <footer class="site-footer">
     <div class="footer-brand">
-      <h2>Royal Pay</h2>
+      <h2><img src="./Images/Logo/royal-pay-white.png" alt="Royal Pay" style="width: 100px; display: block; margin-bottom: 12px;"></h2>
       <p>Regulated banking services provided by Royal Bank Trust, Member FDIC. Royal Pay is a financial technology company, not a bank.</p>
       <p style="margin-top: 16px; font-size: 0.75rem;">&copy; 2024 Royal Pay. Banking Reimagined.</p>
     </div>
@@ -190,5 +197,41 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    const cardWrapper = document.querySelector('.balance-card-wrapper');
+    const card = document.querySelector('.balance-card');
+
+    if (cardWrapper && card) {
+      cardWrapper.addEventListener('mousemove', (e) => {
+        const rect = cardWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -15; // Max 15 deg
+        const rotateY = ((x - centerX) / centerX) * 15;
+        
+        gsap.to(card, {
+          duration: 0.5,
+          rotateX: rotateX,
+          rotateY: rotateY,
+          transformPerspective: 1000,
+          ease: "power2.out"
+        });
+      });
+
+      cardWrapper.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          duration: 0.8,
+          rotateX: 0,
+          rotateY: 0,
+          ease: "elastic.out(1, 0.5)"
+        });
+      });
+    }
+  </script>
 </body>
 </html>

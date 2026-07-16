@@ -3,7 +3,7 @@ body.signup-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--bg-base);
+  background-color: transparent;
 }
 
 .signup-container {
